@@ -1,0 +1,17 @@
+<Project>
+  <!-- RimWorld managed assemblies are found via RIMWORLD_INSTALL_ROOT (or
+       RimWorldInstallDir). The pure-logic test project sets <RequiresRimWorld>false
+       and skips this entirely; the mod project is the only one that needs them. -->
+  <PropertyGroup>
+    <RimWorldInstallDir Condition="'$(RimWorldInstallDir)' == '' and '$(RIMWORLD_INSTALL_ROOT)' != ''">$(RIMWORLD_INSTALL_ROOT)</RimWorldInstallDir>
+    <RimWorldManagedDir Condition="'$(RimWorldManagedDir)' == '' and '$(RimWorldInstallDir)' != '' and Exists('$(RimWorldInstallDir)/RimWorldLinux_Data/Managed/Assembly-CSharp.dll')">$(RimWorldInstallDir)/RimWorldLinux_Data/Managed</RimWorldManagedDir>
+    <RimWorldManagedDir Condition="'$(RimWorldManagedDir)' == '' and '$(RimWorldInstallDir)' != '' and Exists('$(RimWorldInstallDir)/RimWorldLinux.x86_64_Data/Managed/Assembly-CSharp.dll')">$(RimWorldInstallDir)/RimWorldLinux.x86_64_Data/Managed</RimWorldManagedDir>
+    <RimWorldManagedDir Condition="'$(RimWorldManagedDir)' == '' and '$(RimWorldInstallDir)' != '' and Exists('$(RimWorldInstallDir)/RimWorldLinux_x64_Data/Managed/Assembly-CSharp.dll')">$(RimWorldInstallDir)/RimWorldLinux_x64_Data/Managed</RimWorldManagedDir>
+    <RimWorldManagedDir Condition="'$(RimWorldManagedDir)' == '' and '$(RimWorldInstallDir)' != '' and '$([System.OperatingSystem]::IsWindows())' == 'True'">$(RimWorldInstallDir)/RimWorldWin64_Data/Managed</RimWorldManagedDir>
+  </PropertyGroup>
+
+  <Target Name="EnsureNightSafetyRimWorldReferences" BeforeTargets="ResolveReferences"
+          Condition="'$(RequiresRimWorld)' != 'false' and !Exists('$(RimWorldManagedDir)/Assembly-CSharp.dll')">
+    <Error Text="Could not locate RimWorld managed assemblies. Set RIMWORLD_INSTALL_ROOT or RimWorldInstallDir." />
+  </Target>
+</Project>

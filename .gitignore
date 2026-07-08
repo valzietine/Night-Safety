@@ -1,0 +1,8 @@
+bin/
+obj/
+*.user
+*.suo
+*.tmp
+*.log
+*.zip
+*.7z1.6/

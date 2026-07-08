@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Night Safety</name>
+  <author>Valzietine</author>
+  <packageId>valzietine.nightsafety</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>Night Safety turns nightfall into a survivial problem. Work in progress.</description>
+</ModMetaData>
