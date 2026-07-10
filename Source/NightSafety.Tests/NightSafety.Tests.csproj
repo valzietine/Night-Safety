@@ -10,5 +10,6 @@
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.1" PrivateAssets="all" />
     <Compile Include="../NightSafety/Core/NightSafetyMath.cs" Link="NightSafetyMath.cs" />
+    <Compile Include="../NightSafety/Core/NightEncounter.cs" Link="NightEncounter.cs" />
   </ItemGroup>
 </Project>

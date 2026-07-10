@@ -9,6 +9,7 @@ namespace NightSafety
     public static class NightSafetyDefOf
     {
         public static ThingDef NightSafety_ProtectionOven = null!;
+        public static PawnKindDef NightSafety_ForestSpirit = null!;
 
         static NightSafetyDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(NightSafetyDefOf));
     }

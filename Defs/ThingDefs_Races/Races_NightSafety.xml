@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>NightSafety_ForestSpiritRace</defName>
+    <label>forest spirit</label>
+    <description>A relentless presence that hunts those exposed beyond protection at night.</description>
+    <statBases>
+      <MoveSpeed>5.9</MoveSpeed>
+      <MarketValue>0</MarketValue>
+      <ComfyTemperatureMin>-100</ComfyTemperatureMin>
+      <ComfyTemperatureMax>100</ComfyTemperatureMax>
+      <ArmorRating_Blunt>0.8</ArmorRating_Blunt>
+      <ArmorRating_Sharp>0.8</ArmorRating_Sharp>
+      <!-- Vanilla's zero factor removes damage/bullet stagger without bypassing terrain or weather path cost. -->
+      <StaggerDurationFactor>0</StaggerDurationFactor>
+    </statBases>
+    <tools>
+      <li>
+        <label>claw</label>
+        <capacities><li>Cut</li></capacities>
+        <power>30</power>
+        <cooldownTime>2</cooldownTime>
+      </li>
+    </tools>
+    <comps>
+      <li Class="NightSafety.Entities.CompProperties_DamageImmune" />
+    </comps>
+    <race>
+      <thinkTreeMain>NightSafety_ForestSpiritThinkTree</thinkTreeMain>
+      <body>QuadrupedAnimalWithPawsAndTail</body>
+      <baseBodySize>1.2</baseBodySize>
+      <baseHealthScale>4</baseHealthScale>
+      <lifeStageAges>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+      <foodType>None</foodType>
+      <intelligence>ToolUser</intelligence>
+      <trainability>None</trainability>
+      <lifeExpectancy>1000</lifeExpectancy>
+      <soundMeleeHitPawn>Pawn_Melee_Punch_HitPawn</soundMeleeHitPawn>
+      <soundMeleeHitBuilding>Pawn_Melee_Punch_HitBuilding_Generic</soundMeleeHitBuilding>
+      <soundMeleeMiss>Pawn_Melee_Punch_Miss</soundMeleeMiss>
+    </race>
+    <graphicData>
+      <texPath>Things/Pawn/Animal/Megasloth/Megasloth</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>1.8</drawSize>
+      <shaderType>CutoutComplex</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

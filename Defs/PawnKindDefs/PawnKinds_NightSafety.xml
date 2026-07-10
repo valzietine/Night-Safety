@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>NightSafety_ForestSpirit</defName>
+    <label>forest spirit</label>
+    <race>NightSafety_ForestSpiritRace</race>
+    <combatPower>500</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <wildGroupSize><min>1</min><max>1</max></wildGroupSize>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Animal/Megasloth/Megasloth</texPath>
+          <drawSize>1.8</drawSize>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Animal/Megasloth/Dessicated_Megasloth</texPath>
+          <drawSize>1.8</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>
