@@ -5,7 +5,7 @@
     <label>forest spirit</label>
     <description>A relentless presence that hunts those exposed beyond protection at night.</description>
     <statBases>
-      <MoveSpeed>5.9</MoveSpeed>
+      <MoveSpeed>5.5</MoveSpeed>
       <MarketValue>0</MarketValue>
       <ComfyTemperatureMin>-100</ComfyTemperatureMin>
       <ComfyTemperatureMax>100</ComfyTemperatureMax>
