@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
+  <ThinkTreeDef>
+    <defName>NightSafety_SeekProtection</defName>
+    <insertTag>Humanlike_PreMain</insertTag>
+    <insertPriority>90</insertPriority>
+    <thinkRoot Class="NightSafety.AI.ThinkNode_ConditionalSeekProtection">
+      <subNodes>
+        <li Class="NightSafety.AI.JobGiver_SeekProtection" />
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+  <ThinkTreeDef>
+    <defName>NightSafety_ForestSpiritThinkTree</defName>
+    <thinkRoot Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="NightSafety.AI.JobGiver_HuntExposedPawn" />
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
 </Defs>

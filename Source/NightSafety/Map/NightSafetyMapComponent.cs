@@ -4,6 +4,7 @@ using NightSafety.Buildings;
 using NightSafety.Core;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace NightSafety
 {
@@ -11,6 +12,7 @@ namespace NightSafety
     {
         private readonly HashSet<CompProtectionOven> ovens = new HashSet<CompProtectionOven>();
         private Pawn? forestSpirit;
+        private readonly Dictionary<Pawn, int> safetyRetryAfterTick = new Dictionary<Pawn, int>();
 
         public NightSafetyMapComponent(Map map) : base(map)
         {
@@ -20,6 +22,16 @@ namespace NightSafety
         public bool CanStartForestSpirit => IsNight && map.IsPlayerHome && map.mapPawns.FreeColonistsSpawnedCount > 0 && !HasActiveForestSpirit;
         private bool HasActiveForestSpirit => forestSpirit != null && !forestSpirit.DestroyedOrNull()
             && NightEncounterTransitions.HasActiveOwner(true, forestSpirit.Spawned, forestSpirit.Map == map);
+
+        public bool IsSafetyBackoffActive(Pawn pawn)
+        {
+            return safetyRetryAfterTick.TryGetValue(pawn, out int retryTick) && Find.TickManager.TicksGame < retryTick;
+        }
+
+        public void RecordSafetyPathFailure(Pawn pawn)
+        {
+            safetyRetryAfterTick[pawn] = Find.TickManager.TicksGame + 600;
+        }
 
         public override void FinalizeInit()
         {
@@ -50,6 +62,8 @@ namespace NightSafety
             if (!map.IsHashIntervalTick(250)) return;
             PruneOvens();
             if (CanStartForestSpirit) TrySpawnForestSpirit();
+            foreach (Pawn pawn in safetyRetryAfterTick.Keys.Where(pawn => pawn == null || pawn.DestroyedOrNull() || pawn.MapHeld != map).ToList())
+                safetyRetryAfterTick.Remove(pawn);
         }
 
         public void RegisterForestSpirit(Pawn pawn)
@@ -108,6 +122,34 @@ namespace NightSafety
         public bool IsPawnExposed(Pawn pawn)
         {
             return IsNight && pawn.Spawned && pawn.Map == map && !pawn.Dead && !IsProtected(pawn.Position);
+        }
+
+        public bool TryFindSafeDestination(Pawn pawn, out IntVec3 destination)
+        {
+            destination = IntVec3.Invalid;
+            PruneOvens();
+            var candidates = new List<(IntVec3 cell, int distance, int ovenId)>();
+            foreach (CompProtectionOven oven in ovens.Where(item => item.ActiveNow).OrderBy(item => item.parent.thingIDNumber))
+            {
+                foreach (IntVec3 cell in GenRadial.RadialCellsAround(oven.parent.Position, oven.Radius, true))
+                {
+                    if (!cell.InBounds(map) || !cell.Standable(map) || IsForbidden(pawn, cell)) continue;
+                    Area? allowedArea = pawn.playerSettings?.EffectiveAreaRestrictionInPawnCurrentMap;
+                    if (allowedArea != null && !allowedArea[cell]) continue;
+                    if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Some)) continue;
+                    candidates.Add((cell, pawn.Position.DistanceToSquared(cell), oven.parent.thingIDNumber));
+                }
+            }
+
+            if (candidates.Count == 0) return false;
+            destination = candidates.OrderBy(c => c.distance).ThenBy(c => c.ovenId).ThenBy(c => map.cellIndices.CellToIndex(c.cell)).First().cell;
+            return true;
+        }
+
+        private static bool IsForbidden(Pawn pawn, IntVec3 cell)
+        {
+            Building edifice = cell.GetEdifice(pawn.Map);
+            return edifice != null && edifice.IsForbidden(pawn);
         }
     }
 }
