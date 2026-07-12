@@ -20,4 +20,32 @@
       </li>
     </lifeStages>
   </PawnKindDef>
+  <PawnKindDef ParentName="BasePlayerPawnKind">
+    <defName>NightSafety_Harasser</defName>
+    <label>night harasser</label>
+    <race>Human</race>
+    <defaultFactionDef>NightSafety_Harassers</defaultFactionDef>
+    <combatPower>45</combatPower>
+    <chemicalAddictionChance>0.05</chemicalAddictionChance>
+    <apparelTags>
+      <li>Neolithic</li>
+    </apparelTags>
+    <apparelMoney>200~200</apparelMoney>
+    <weaponMoney>80~150</weaponMoney>
+    <weaponTags>
+      <li>NeolithicMeleeBasic</li>
+      <li>NeolithicRangedBasic</li>
+    </weaponTags>
+    <techHediffsMoney>50~50</techHediffsMoney>
+    <techHediffsTags>
+      <li>Poor</li>
+    </techHediffsTags>
+    <techHediffsChance>0.02</techHediffsChance>
+    <initialResistanceRange>55~65</initialResistanceRange>
+    <startingHediffs>
+      <li>
+        <def>NightSafety_ForestAffliction</def>
+      </li>
+    </startingHediffs>
+  </PawnKindDef>
 </Defs>

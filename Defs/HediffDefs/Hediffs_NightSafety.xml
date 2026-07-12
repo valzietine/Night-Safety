@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>NightSafety_HarasserState</defName>
+    <label>night harasser state</label>
+    <description>Internal persisted identity for a temporary Night Safety harasser pack.</description>
+    <hediffClass>NightSafety.AI.Hediff_NightHarasserState</hediffClass>
+    <isBad>false</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+  </HediffDef>
+</Defs>

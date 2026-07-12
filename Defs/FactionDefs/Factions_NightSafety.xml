@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <FactionDef ParentName="FactionBase">
+    <defName>NightSafety_Harassers</defName>
+    <label>night harassers</label>
+    <description>Small bands that appear only to harass settlements after dark.</description>
+    <pawnSingular>night harasser</pawnSingular>
+    <pawnsPlural>night harassers</pawnsPlural>
+    <fixedName>Night harassers</fixedName>
+    <basicMemberKind>NightSafety_Harasser</basicMemberKind>
+    <techLevel>Neolithic</techLevel>
+    <categoryTag>Tribal</categoryTag>
+    <backstoryFilters>
+      <li><categories><li>Tribal</li></categories></li>
+    </backstoryFilters>
+    <hidden>true</hidden>
+    <displayInFactionSelection>false</displayInFactionSelection>
+    <requiredCountAtGameStart>0</requiredCountAtGameStart>
+    <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
+    <maxConfigurableAtWorldCreation>0</maxConfigurableAtWorldCreation>
+    <settlementGenerationWeight>0</settlementGenerationWeight>
+    <raidsForbidden>true</raidsForbidden>
+    <canStageAttacks>false</canStageAttacks>
+    <canSiege>false</canSiege>
+    <canGenerateQuestSites>false</canGenerateQuestSites>
+    <canRequestTraders>false</canRequestTraders>
+    <canRequestMilitaryAid>false</canRequestMilitaryAid>
+    <canRequestOrbitalTrader>false</canRequestOrbitalTrader>
+    <permanentEnemy>true</permanentEnemy>
+    <autoFlee>false</autoFlee>
+    <factionIconPath>World/WorldObjects/Expanding/Sites/ItemStash</factionIconPath>
+    <colorSpectrum><li>(0.32, 0.23, 0.16)</li></colorSpectrum>
+  </FactionDef>
+</Defs>
