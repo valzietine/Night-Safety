@@ -2,9 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using NightSafety.Buildings;
 using NightSafety.Core;
+using NightSafety.AI;
+using NightSafety.Lords;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using Verse.AI.Group;
 
 namespace NightSafety
 {
@@ -13,6 +16,8 @@ namespace NightSafety
         private readonly HashSet<CompProtectionOven> ovens = new HashSet<CompProtectionOven>();
         private Pawn? forestSpirit;
         private readonly Dictionary<Pawn, int> safetyRetryAfterTick = new Dictionary<Pawn, int>();
+        private int nextHarasserLocalDay = -1;
+        private int lastHarasserScheduleDay = -1;
 
         public NightSafetyMapComponent(Map map) : base(map)
         {
@@ -22,6 +27,7 @@ namespace NightSafety
         public bool CanStartForestSpirit => IsNight && map.IsPlayerHome && map.mapPawns.FreeColonistsSpawnedCount > 0 && !HasActiveForestSpirit;
         private bool HasActiveForestSpirit => forestSpirit != null && !forestSpirit.DestroyedOrNull()
             && NightEncounterTransitions.HasActiveOwner(true, forestSpirit.Spawned, forestSpirit.Map == map);
+        public bool HasActiveHarassers => map.lordManager.lords.Any(lord => lord.LordJob is Lords.LordJob_NightHarassers);
 
         public bool IsSafetyBackoffActive(Pawn pawn)
         {
@@ -42,13 +48,18 @@ namespace NightSafety
                 CompProtectionOven? oven = thing.TryGetComp<CompProtectionOven>();
                 if (oven != null) ovens.Add(oven);
             }
+
             RepairForestSpiritOwnership();
+            EnsureHarasserStateMarkers();
+            RepairHarasserOwnership();
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_References.Look(ref forestSpirit, "nightSafetyForestSpirit");
+            Scribe_Values.Look(ref nextHarasserLocalDay, "nightSafetyNextHarasserLocalDay", -1);
+            Scribe_Values.Look(ref lastHarasserScheduleDay, "nightSafetyLastHarasserScheduleDay", -1);
             if (Scribe.mode == LoadSaveMode.PostLoadInit
                 && forestSpirit != null && (forestSpirit.DestroyedOrNull() || forestSpirit.Map != map))
             {
@@ -61,7 +72,11 @@ namespace NightSafety
             base.MapComponentTick();
             if (!map.IsHashIntervalTick(250)) return;
             PruneOvens();
+            RepairForestSpiritOwnership();
+            EnsureHarasserStateMarkers();
+            RepairHarasserOwnership();
             if (CanStartForestSpirit) TrySpawnForestSpirit();
+            TryScheduleHarassers();
             foreach (Pawn pawn in safetyRetryAfterTick.Keys.Where(pawn => pawn == null || pawn.DestroyedOrNull() || pawn.MapHeld != map).ToList())
                 safetyRetryAfterTick.Remove(pawn);
         }
@@ -83,6 +98,69 @@ namespace NightSafety
             // old saves are destroyed.
             foreach (Pawn duplicate in candidates.Where(pawn => pawn != forestSpirit))
                 duplicate.Destroy(DestroyMode.Vanish);
+        }
+
+        private void RepairHarasserOwnership()
+        {
+            List<Pawn> orphans = map.mapPawns.AllPawnsSpawned
+                .Where(pawn => pawn.Faction?.def == NightSafetyDefOf.NightSafety_Harassers
+                    && pawn.GetLord() == null && !pawn.Dead)
+                .OrderBy(pawn => pawn.thingIDNumber)
+                .ToList();
+            if (orphans.Count == 0) return;
+
+            Hediff_NightHarasserState? state = orphans
+                .Select(pawn => pawn.health.hediffSet.GetFirstHediffOfDef(NightSafetyDefOf.NightSafety_HarasserState))
+                .OfType<Hediff_NightHarasserState>()
+                .FirstOrDefault();
+            if (state == null) return;
+
+            var lordJob = new LordJob_NightHarassers(state.HarassmentPoint, state.Theme, state.EffigyStuff);
+            lordJob.RestoreRetreating(state.Retreating);
+            LordMaker.MakeNewLord(orphans[0].Faction, lordJob, map, orphans);
+            Thing? existingEffigy = map.listerThings.ThingsOfDef(NightSafetyDefOf.NightSafety_HarassmentEffigy)
+                .OrderBy(thing => thing.thingIDNumber).FirstOrDefault();
+            if (existingEffigy != null) lordJob.RegisterEffigy(existingEffigy);
+        }
+
+        private void TryScheduleHarassers()
+        {
+            if (!HarasserSchedulePolicy.CanAttempt(IsNight, map.IsPlayerHome,
+                map.mapPawns.FreeColonistsSpawnedCount, HasActiveHarassers)) return;
+
+            float hour = GenLocalDate.HourFloat(map);
+            int nightKey = HarasserSchedulePolicy.NightKey(GenLocalDate.Year(map), GenLocalDate.DayOfYear(map),
+                hour, 6f, GenDate.DaysPerYear);
+            if (!HarasserSchedulePolicy.ShouldAttempt(nightKey, lastHarasserScheduleDay, nextHarasserLocalDay)) return;
+
+            // Mark the night before execution so a reload or failed worker cannot retry every 250 ticks.
+            lastHarasserScheduleDay = nightKey;
+
+            IncidentParms parms = StorytellerUtility.DefaultParmsNow(
+                NightSafetyDefOf.NightSafety_NightHarassersIncident.category, map);
+            bool fired = NightSafetyDefOf.NightSafety_NightHarassersIncident.Worker.TryExecute(parms);
+            nextHarasserLocalDay = fired
+                ? HarasserSchedulePolicy.NextEligibleAfterSuccess(nightKey)
+                : HarasserSchedulePolicy.NextEligibleAfterFailure(nightKey);
+        }
+
+        private void EnsureHarasserStateMarkers()
+        {
+            foreach (Lord lord in map.lordManager.lords.Where(lord => lord.LordJob is LordJob_NightHarassers))
+            {
+                var lordJob = (LordJob_NightHarassers)lord.LordJob;
+                foreach (Pawn pawn in lord.ownedPawns.Where(pawn => !pawn.Dead))
+                {
+                    var state = pawn.health.hediffSet.GetFirstHediffOfDef(NightSafetyDefOf.NightSafety_HarasserState)
+                        as Hediff_NightHarasserState;
+                    if (state == null)
+                    {
+                        state = (Hediff_NightHarasserState)HediffMaker.MakeHediff(NightSafetyDefOf.NightSafety_HarasserState, pawn);
+                        pawn.health.AddHediff(state);
+                    }
+                    state.Initialize(lordJob.Theme, lordJob.HarassmentPoint, lordJob.EffigyStuff, lordJob.Retreating);
+                }
+            }
         }
 
         private void TrySpawnForestSpirit()

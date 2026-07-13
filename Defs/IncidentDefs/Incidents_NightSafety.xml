@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <IncidentDef>
+    <defName>NightSafety_NightHarassersIncident</defName>
+    <label>night harassers</label>
+    <category>ThreatBig</category>
+    <targetTags><li>Map_PlayerHome</li></targetTags>
+    <workerClass>NightSafety.Incidents.IncidentWorker_NightHarassers</workerClass>
+    <!-- NightSafetyMapComponent owns the every-other-night cadence. -->
+    <baseChance>0</baseChance>
+    <minRefireDays>0</minRefireDays>
+    <letterLabel>Night harassers</letterLabel>
+    <letterText>A small, skittish pack of tribal harassers is preparing trouble outside the colony. Confront them and they will flee.</letterText>
+    <letterDef>ThreatBig</letterDef>
+  </IncidentDef>
+</Defs>

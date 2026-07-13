@@ -13,6 +13,12 @@ namespace NightSafety
         public static PawnKindDef NightSafety_Harasser = null!;
         public static FactionDef NightSafety_Harassers = null!;
         public static HediffDef NightSafety_HarasserState = null!;
+        public static IncidentDef NightSafety_NightHarassersIncident = null!;
+        public static DutyDef NightSafety_Harass = null!;
+        public static JobDef NightSafety_HarassThrow = null!;
+        public static JobDef NightSafety_HarassTheft = null!;
+        public static JobDef NightSafety_BuildHarassmentEffigy = null!;
+        public static ThingDef NightSafety_HarassmentEffigy = null!;
 
         static NightSafetyDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(NightSafetyDefOf));
     }

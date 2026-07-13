@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <JobDef>
+    <defName>NightSafety_HarassThrow</defName>
+    <driverClass>NightSafety.AI.JobDriver_HarassThrow</driverClass>
+    <reportString>throwing at TargetA.</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>NightSafety_HarassTheft</defName>
+    <driverClass>NightSafety.AI.JobDriver_HarassTheft</driverClass>
+    <reportString>stealing TargetA.</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>NightSafety_BuildHarassmentEffigy</defName>
+    <driverClass>NightSafety.AI.JobDriver_BuildHarassmentEffigy</driverClass>
+    <reportString>building a harassment effigy.</reportString>
+  </JobDef>
+</Defs>

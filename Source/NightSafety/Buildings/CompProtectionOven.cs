@@ -1,6 +1,8 @@
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI.Group;
+using NightSafety.Lords;
 
 namespace NightSafety.Buildings
 {
@@ -35,6 +37,11 @@ namespace NightSafety.Buildings
             }
         }
 
+        public override void PostPreApplyDamage(ref DamageInfo dinfo, out bool absorbed)
+        {
+            // Harassers are ambient pressure and must never invalidate the core safety loop by destroying its oven.
+            absorbed = dinfo.Instigator is Pawn pawn && pawn.GetLord()?.LordJob is LordJob_NightHarassers;
+        }
 
         public override string CompInspectStringExtra()
         {
