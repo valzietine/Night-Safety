@@ -32,10 +32,10 @@ namespace NightSafety.AI
                 .OrderBy(candidate => pawn.Position.DistanceToSquared(candidate.Position))
                 .ThenBy(candidate => candidate.thingIDNumber)
                 .FirstOrDefault();
-            if (target == null) return JobMaker.MakeJob(JobDefOf.Wait, 180);
+            if (target == null) return JobMaker.MakeJob(JobDefOf.Wait, NightSafetyDefOf.NightSafety_HarassmentConfig.spiritHuntWaitTicks);
 
             Job attack = JobMaker.MakeJob(JobDefOf.AttackMelee, target);
-            attack.expiryInterval = 120;
+            attack.expiryInterval = NightSafetyDefOf.NightSafety_HarassmentConfig.spiritAttackExpiryTicks;
             attack.checkOverrideOnExpire = true;
             // The Spirit is a lethal boundary pressure, not a predator that leaves an exposed pawn merely downed.
             attack.killIncappedTarget = true;

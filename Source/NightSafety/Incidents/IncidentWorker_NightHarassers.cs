@@ -23,6 +23,7 @@ namespace NightSafety.Incidents
         {
             if (!(parms.target is Map map)) return false;
             NightSafetyMapComponent component = map.GetComponent<NightSafetyMapComponent>();
+            HarassmentConfigDef config = NightSafetyDefOf.NightSafety_HarassmentConfig;
             if (!map.IsPlayerHome || map.mapPawns.FreeColonistsSpawnedCount == 0) return false;
             if (!component.IsNight || component.HasActiveHarassers) return false;
 
@@ -45,7 +46,7 @@ namespace NightSafety.Incidents
             for (int i = 0; i < count; i++)
             {
                 Pawn pawn = PawnGenerator.GeneratePawn(NightSafetyDefOf.NightSafety_Harasser, faction);
-                IntVec3 spawnCell = CellFinder.RandomClosewalkCellNear(center, map, 5);
+                IntVec3 spawnCell = CellFinder.RandomClosewalkCellNear(center, map, (int)config.spawnClosewalkRadius);
                 GenSpawn.Spawn(pawn, spawnCell, map);
                 pawns.Add(pawn);
             }
@@ -54,9 +55,9 @@ namespace NightSafety.Incidents
                 .OrderBy(pawn => pawn.thingIDNumber)
                 .Select(pawn => pawn.Position)
                 .First();
-            IntVec3 harassmentPoint = GenRadial.RadialCellsAround(colonyAnchor, 22f, true)
+            IntVec3 harassmentPoint = GenRadial.RadialCellsAround(colonyAnchor, config.harassmentPointRadius, true)
                 .Where(cell => cell.InBounds(map)
-                    && colonyAnchor.DistanceToSquared(cell) >= 18f * 18f
+                    && colonyAnchor.DistanceToSquared(cell) >= config.harassmentPointMinDistance * config.harassmentPointMinDistance
                     && cell.Standable(map)
                     && map.reachability.CanReach(center, cell, PathEndMode.OnCell, TraverseParms.For(TraverseMode.PassDoors)))
                 .OrderBy(cell => map.cellIndices.CellToIndex(cell))

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <NightSafety.Core.HarassmentConfigDef>
+    <defName>NightSafety_HarassmentConfig</defName>
+    <arsonProjectile>Proj_GrenadeMolotov</arsonProjectile>
+    <bombardmentProjectile>Proj_GrenadeFrag</bombardmentProjectile>
+    <minThrowRange>4</minThrowRange>
+    <maxThrowRange>12</maxThrowRange>
+    <throwWarmupTicks>90</throwWarmupTicks>
+    <regroupMinTicks>1200</regroupMinTicks>
+    <regroupMaxTicks>2400</regroupMaxTicks>
+    <effigyWorkTicks>900</effigyWorkTicks>
+    <!-- Effigy material cost is single-sourced from NightSafety_HarassmentEffigy/costStuffCount. -->
+    <nightStartHour>20</nightStartHour>
+    <nightEndHour>6</nightEndHour>
+    <safetyPathRetryTicks>600</safetyPathRetryTicks>
+    <harassmentPointRadius>22</harassmentPointRadius>
+    <harassmentPointMinDistance>18</harassmentPointMinDistance>
+    <spawnClosewalkRadius>5</spawnClosewalkRadius>
+    <breachJobExpiryTicks>600</breachJobExpiryTicks>
+    <throwJobExpiryTicks>1200</throwJobExpiryTicks>
+    <regroupWaitTicks>180</regroupWaitTicks>
+    <regroupReturnDistance>5</regroupReturnDistance>
+    <theftRecheckIntervalTicks>120</theftRecheckIntervalTicks>
+    <effigySearchRadius>8</effigySearchRadius>
+    <spiritHuntWaitTicks>180</spiritHuntWaitTicks>
+    <spiritAttackExpiryTicks>120</spiritAttackExpiryTicks>
+  </NightSafety.Core.HarassmentConfigDef>
+</Defs>

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using NightSafety.Core;
 using NightSafety.Lords;
-using RimWorld;
 using Verse;
 using Verse.AI;
 
@@ -18,7 +17,7 @@ namespace NightSafety.AI
             this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
             yield return Toils_Goto.GotoCell(TargetIndex.B, PathEndMode.OnCell);
 
-            Toil warmup = Toils_General.Wait(90);
+            Toil warmup = Toils_General.Wait(NightSafetyDefOf.NightSafety_HarassmentConfig.throwWarmupTicks);
             warmup.WithProgressBarToilDelay(TargetIndex.A);
             yield return warmup;
 
@@ -32,8 +31,8 @@ namespace NightSafety.AI
                 // Recheck at the irreversible launch boundary so stale jobs cannot violate safety.
                 if (!HarassmentUtility.IsAllowedDestructiveTarget(target, pawn.Map, requireFlammable)) return;
                 ThingDef projectileDef = lordJob.Theme == HarassmentTheme.Arson
-                    ? DefDatabase<ThingDef>.GetNamed("Proj_GrenadeMolotov")
-                    : DefDatabase<ThingDef>.GetNamed("Proj_GrenadeFrag");
+                    ? NightSafetyDefOf.NightSafety_HarassmentConfig.arsonProjectile
+                    : NightSafetyDefOf.NightSafety_HarassmentConfig.bombardmentProjectile;
                 Projectile projectile = (Projectile)GenSpawn.Spawn(projectileDef, pawn.Position, pawn.Map);
                 projectile.Launch(pawn, target, target, ProjectileHitFlags.IntendedTarget | ProjectileHitFlags.NonTargetPawns, preventFriendlyFire: false);
                 lordJob.RecordActionCompleted(pawn);

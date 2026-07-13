@@ -19,6 +19,7 @@ namespace NightSafety
         public static JobDef NightSafety_HarassTheft = null!;
         public static JobDef NightSafety_BuildHarassmentEffigy = null!;
         public static ThingDef NightSafety_HarassmentEffigy = null!;
+        public static HarassmentConfigDef NightSafety_HarassmentConfig = null!;
 
         static NightSafetyDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(NightSafetyDefOf));
     }

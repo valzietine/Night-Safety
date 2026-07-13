@@ -63,7 +63,7 @@ namespace NightSafety.Lords
             base.LordJobTick();
             if (!retreating && (lord?.Map?.GetComponent<NightSafetyMapComponent>()?.IsNight == false || IsConfronted()
                 || (theme == HarassmentTheme.Theft && lord != null
-                    && Find.TickManager.TicksGame % 120 == 0
+                    && Find.TickManager.TicksGame % NightSafetyDefOf.NightSafety_HarassmentConfig.theftRecheckIntervalTicks == 0
                     && !HarassmentUtility.AnyTheftTarget(lord))))
             {
                 retreating = true;
@@ -118,7 +118,8 @@ namespace NightSafety.Lords
 
         public void RecordActionCompleted(Pawn pawn)
         {
-            int duration = HarassmentThemePolicy.RegroupDuration(1200, 2400,
+            HarassmentConfigDef config = NightSafetyDefOf.NightSafety_HarassmentConfig;
+            int duration = HarassmentThemePolicy.RegroupDuration(config.regroupMinTicks, config.regroupMaxTicks,
                 pawn.thingIDNumber, Find.TickManager.TicksGame);
             nextActionTickByPawnId[pawn.thingIDNumber] = Find.TickManager.TicksGame + duration;
         }

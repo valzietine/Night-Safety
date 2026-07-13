@@ -35,7 +35,7 @@ namespace NightSafety.AI
             Building? blocker = HarassmentUtility.FindObjectiveBreachTarget(pawn, requireFlammable, theft);
             if (blocker == null) return null;
             Job job = JobMaker.MakeJob(JobDefOf.AttackMelee, blocker);
-            job.expiryInterval = 600;
+            job.expiryInterval = NightSafetyDefOf.NightSafety_HarassmentConfig.breachJobExpiryTicks;
             job.checkOverrideOnExpire = true;
             return job;
         }
@@ -45,7 +45,7 @@ namespace NightSafety.AI
             Thing? target = HarassmentUtility.FindDestructiveTarget(pawn, requireFlammable);
             if (target == null || !HarassmentUtility.TryFindThrowCell(pawn, target, out IntVec3 castCell)) return null;
             Job job = JobMaker.MakeJob(NightSafetyDefOf.NightSafety_HarassThrow, target, castCell);
-            job.expiryInterval = 1200;
+            job.expiryInterval = NightSafetyDefOf.NightSafety_HarassmentConfig.throwJobExpiryTicks;
             return job;
         }
 
@@ -67,11 +67,12 @@ namespace NightSafety.AI
 
         private static Job RegroupJob(Pawn pawn, LordJob_NightHarassers lordJob)
         {
-            float returnDistanceSquared = 5f * 5f;
+            HarassmentConfigDef config = NightSafetyDefOf.NightSafety_HarassmentConfig;
+            float returnDistanceSquared = config.regroupReturnDistance * config.regroupReturnDistance;
             if (pawn.Position.DistanceToSquared(lordJob.HarassmentPoint) > returnDistanceSquared)
                 return JobMaker.MakeJob(JobDefOf.Goto, lordJob.HarassmentPoint);
-            Job wait = JobMaker.MakeJob(JobDefOf.Wait, 180);
-            wait.expiryInterval = 180;
+            Job wait = JobMaker.MakeJob(JobDefOf.Wait, config.regroupWaitTicks);
+            wait.expiryInterval = config.regroupWaitTicks;
             return wait;
         }
     }

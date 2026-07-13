@@ -15,7 +15,7 @@ namespace NightSafety.AI
         protected override IEnumerable<Toil> MakeNewToils()
         {
             yield return Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.OnCell);
-            Toil build = Toils_General.Wait(900);
+            Toil build = Toils_General.Wait(NightSafetyDefOf.NightSafety_HarassmentConfig.effigyWorkTicks);
             build.WithProgressBarToilDelay(TargetIndex.A);
             yield return build;
             yield return Toils_General.Do(() =>

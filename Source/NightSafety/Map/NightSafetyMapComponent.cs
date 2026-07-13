@@ -23,7 +23,9 @@ namespace NightSafety
         {
         }
 
-        public bool IsNight => NightSafetyMath.IsNight(GenLocalDate.HourFloat(map), 20f, 6f);
+        public bool IsNight => NightSafetyMath.IsNight(GenLocalDate.HourFloat(map),
+            NightSafetyDefOf.NightSafety_HarassmentConfig.nightStartHour,
+            NightSafetyDefOf.NightSafety_HarassmentConfig.nightEndHour);
         public bool CanStartForestSpirit => IsNight && map.IsPlayerHome && map.mapPawns.FreeColonistsSpawnedCount > 0 && !HasActiveForestSpirit;
         private bool HasActiveForestSpirit => forestSpirit != null && !forestSpirit.DestroyedOrNull()
             && NightEncounterTransitions.HasActiveOwner(true, forestSpirit.Spawned, forestSpirit.Map == map);
@@ -36,7 +38,8 @@ namespace NightSafety
 
         public void RecordSafetyPathFailure(Pawn pawn)
         {
-            safetyRetryAfterTick[pawn] = Find.TickManager.TicksGame + 600;
+            safetyRetryAfterTick[pawn] = Find.TickManager.TicksGame
+                + NightSafetyDefOf.NightSafety_HarassmentConfig.safetyPathRetryTicks;
         }
 
         public override void FinalizeInit()
@@ -130,7 +133,7 @@ namespace NightSafety
 
             float hour = GenLocalDate.HourFloat(map);
             int nightKey = HarasserSchedulePolicy.NightKey(GenLocalDate.Year(map), GenLocalDate.DayOfYear(map),
-                hour, 6f, GenDate.DaysPerYear);
+                hour, NightSafetyDefOf.NightSafety_HarassmentConfig.nightEndHour, GenDate.DaysPerYear);
             if (!HarasserSchedulePolicy.ShouldAttempt(nightKey, lastHarasserScheduleDay, nextHarasserLocalDay)) return;
 
             // Mark the night before execution so a reload or failed worker cannot retry every 250 ticks.

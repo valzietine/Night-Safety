@@ -106,12 +106,13 @@ namespace NightSafety.AI
 
         public static bool TryFindThrowCell(Pawn pawn, Thing target, out IntVec3 result)
         {
+            HarassmentConfigDef config = NightSafetyDefOf.NightSafety_HarassmentConfig;
             Map map = pawn.Map;
             NightSafetyMapComponent component = map.GetComponent<NightSafetyMapComponent>();
-            IEnumerable<IntVec3> cells = GenRadial.RadialCellsAround(target.Position, 12f, true)
+            IEnumerable<IntVec3> cells = GenRadial.RadialCellsAround(target.Position, config.maxThrowRange, true)
                 .Where(cell => cell.InBounds(map))
-                .Where(cell => cell.DistanceTo(target.Position) >= 4f)
-                .Where(cell => cell.DistanceTo(target.Position) <= 12f)
+                .Where(cell => cell.DistanceTo(target.Position) >= config.minThrowRange)
+                .Where(cell => cell.DistanceTo(target.Position) <= config.maxThrowRange)
                 .Where(cell => cell.Standable(map) && !component.IsProtected(cell))
                 .Where(cell => GenSight.LineOfSight(cell, target.Position, map))
                 .Where(cell => pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
@@ -124,8 +125,9 @@ namespace NightSafety.AI
         public static bool TryFindEffigyCell(Pawn pawn, IntVec3 focus, out IntVec3 result)
         {
             Map map = pawn.Map;
+            HarassmentConfigDef config = NightSafetyDefOf.NightSafety_HarassmentConfig;
             NightSafetyMapComponent component = map.GetComponent<NightSafetyMapComponent>();
-            result = GenRadial.RadialCellsAround(focus, 8f, true)
+            result = GenRadial.RadialCellsAround(focus, config.effigySearchRadius, true)
                 .Where(cell => cell.InBounds(map) && cell.Standable(map) && !cell.Roofed(map))
                 .Where(cell => !component.IsProtected(cell))
                 .Where(cell => GenConstruct.CanBuildOnTerrain(NightSafetyDefOf.NightSafety_HarassmentEffigy, cell, map, Rot4.North))
