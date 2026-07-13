@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <PawnColumnDef>
+    <defName>NightSafety_SafetySeeking</defName>
+    <workerClass>NightSafety.UI.PawnColumnWorker_SafetySeeking</workerClass>
+    <sortable>true</sortable>
+    <headerIcon>UI/Icons/Animal/FollowDrafted</headerIcon>
+    <headerTip>Seek night safety</headerTip>
+    <paintable>true</paintable>
+  </PawnColumnDef>
+</Defs>
