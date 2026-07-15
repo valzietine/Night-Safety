@@ -73,13 +73,26 @@ namespace NightSafety.Lords
             AssignDuties();
         }
 
+        // Reassign duties only when the target duty actually changes. The previous code
+        // allocated a fresh PawnDuty for every owned pawn every tick; a PawnDuty is a passive
+        // data holder the think tree re-reads each tick, so keeping the same instance is
+        // behavior-identical while eliminating the per-tick, per-pawn allocation.
         private void AssignDuties()
         {
             if (lord == null) return;
             foreach (Pawn pawn in lord.ownedPawns)
             {
-                if (retreating) pawn.mindState.duty = new PawnDuty(DutyDefOf.ExitMapBest);
-                else pawn.mindState.duty = new PawnDuty(NightSafetyDefOf.NightSafety_Harass, harassmentPoint, 10f);
+                PawnDuty current = pawn.mindState.duty;
+                if (retreating)
+                {
+                    if (current == null || current.def != DutyDefOf.ExitMapBest)
+                        pawn.mindState.duty = new PawnDuty(DutyDefOf.ExitMapBest);
+                }
+                else if (current == null || current.def != NightSafetyDefOf.NightSafety_Harass
+                    || current.focus.Cell != harassmentPoint)
+                {
+                    pawn.mindState.duty = new PawnDuty(NightSafetyDefOf.NightSafety_Harass, harassmentPoint, 10f);
+                }
             }
         }
 

@@ -190,9 +190,13 @@ namespace NightSafety
 
         public bool IsProtected(IntVec3 cell)
         {
-            PruneOvens();
+            // Non-mutating query: skip invalid ovens inline instead of calling PruneOvens() on
+            // every invocation. IsProtected is evaluated inside per-cell pathfinding predicates,
+            // so a set-mutation pass per candidate cell was a real hot-path cost. The set is still
+            // pruned each tick (MapComponentTick) and on register/deregister.
             foreach (CompProtectionOven oven in ovens)
             {
+                if (oven == null || !oven.parent.Spawned || oven.parent.Map != map) continue;
                 if (oven.ActiveNow && NightSafetyMath.IsWithinRadius(
                     cell.x, cell.z, oven.parent.Position.x, oven.parent.Position.z, oven.Radius))
                     return true;

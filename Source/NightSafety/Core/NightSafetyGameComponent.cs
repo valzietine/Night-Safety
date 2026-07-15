@@ -6,7 +6,10 @@ namespace NightSafety.Core
 {
     public sealed class NightSafetyGameComponent : GameComponent
     {
-        private List<Pawn> safetyDisabledPawns = new List<Pawn>();
+        // Set (not List) so the per-pawn IsSafetySeekingEnabled lookup on the think-node hot
+        // path is O(1). Scribe_Collections serializes a HashSet under the same key, so existing
+        // saves load unchanged.
+        private HashSet<Pawn> safetyDisabledPawns = new HashSet<Pawn>();
 
         public NightSafetyGameComponent(Game game) { }
 
@@ -27,7 +30,7 @@ namespace NightSafety.Core
             Scribe_Collections.Look(ref safetyDisabledPawns, "nightSafetyDisabledPawns", LookMode.Reference);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                safetyDisabledPawns ??= new List<Pawn>();
+                safetyDisabledPawns ??= new HashSet<Pawn>();
                 PruneInvalidPreferences();
             }
         }
