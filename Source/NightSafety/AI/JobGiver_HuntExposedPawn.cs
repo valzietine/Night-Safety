@@ -28,6 +28,8 @@ namespace NightSafety.AI
             }
 
             Pawn? target = pawn.Map.mapPawns.FreeColonistsSpawned
+                // Affliction, rather than current faction, owns immunity so captured or recruited harassers retain it.
+                .Where(candidate => !candidate.health.hediffSet.HasHediff(NightSafetyDefOf.NightSafety_ForestAffliction))
                 .Where(candidate => component.IsPawnExposed(candidate) && pawn.CanReach(candidate, PathEndMode.Touch, Danger.Deadly))
                 .OrderBy(candidate => pawn.Position.DistanceToSquared(candidate.Position))
                 .ThenBy(candidate => candidate.thingIDNumber)

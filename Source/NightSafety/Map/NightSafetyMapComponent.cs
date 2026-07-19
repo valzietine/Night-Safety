@@ -53,6 +53,7 @@ namespace NightSafety
             }
 
             RepairForestSpiritOwnership();
+            EnsureForestAffliction();
             EnsureHarasserStateMarkers();
             RepairHarasserOwnership();
         }
@@ -76,6 +77,7 @@ namespace NightSafety
             if (!map.IsHashIntervalTick(250)) return;
             PruneOvens();
             RepairForestSpiritOwnership();
+            EnsureForestAffliction();
             EnsureHarasserStateMarkers();
             RepairHarasserOwnership();
             if (CanStartForestSpirit) TrySpawnForestSpirit();
@@ -101,6 +103,22 @@ namespace NightSafety
             // old saves are destroyed.
             foreach (Pawn duplicate in candidates.Where(pawn => pawn != forestSpirit))
                 duplicate.Destroy(DestroyMode.Vanish);
+        }
+
+        private void EnsureForestAffliction()
+        {
+            foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned
+                .Where(pawn => !pawn.Dead))
+            {
+                bool hasStateMarker = pawn.health.hediffSet.HasHediff(NightSafetyDefOf.NightSafety_HarasserState);
+                bool shouldHaveAffliction = ForestAfflictionPolicy.ShouldHaveAffliction(
+                    pawn.Faction?.def == NightSafetyDefOf.NightSafety_Harassers,
+                    pawn.kindDef == NightSafetyDefOf.NightSafety_Harasser,
+                    hasStateMarker);
+                if (shouldHaveAffliction
+                    && !pawn.health.hediffSet.HasHediff(NightSafetyDefOf.NightSafety_ForestAffliction))
+                    pawn.health.AddHediff(NightSafetyDefOf.NightSafety_ForestAffliction);
+            }
         }
 
         private void RepairHarasserOwnership()

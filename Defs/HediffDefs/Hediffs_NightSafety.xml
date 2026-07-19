@@ -8,4 +8,12 @@
     <isBad>false</isBad>
     <scenarioCanAdd>false</scenarioCanAdd>
   </HediffDef>
+
+  <HediffDef>
+    <defName>NightSafety_ForestAffliction</defName>
+    <label>forest affliction</label>
+    <description>The forest has taken root in this person's body and mind. Afflicted people are unusually resistant to recruitment, but the Forest Spirit does not recognize them as prey.</description>
+    <isBad>true</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+  </HediffDef>
 </Defs>

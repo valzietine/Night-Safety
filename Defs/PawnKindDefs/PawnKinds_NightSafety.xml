@@ -20,6 +20,7 @@
       </li>
     </lifeStages>
   </PawnKindDef>
+
   <PawnKindDef ParentName="BasePlayerPawnKind">
     <defName>NightSafety_Harasser</defName>
     <label>night harasser</label>
