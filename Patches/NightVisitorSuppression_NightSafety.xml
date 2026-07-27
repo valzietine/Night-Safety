@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Night Visitors (approved follow-up): suppress trader/visitor/traveler arrivals during local
+    night by swapping each vanilla incident's workerClass for a night-gated subclass. Raids and
+    all other incidents are left untouched. Each swap is guarded on the vanilla workerClass still
+    being present, so if another mod has already replaced it we skip rather than clobber it.
+  -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/IncidentDef[defName="TraderCaravanArrival"]/workerClass[text()="IncidentWorker_TraderCaravanArrival"]</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>Defs/IncidentDef[defName="TraderCaravanArrival"]/workerClass</xpath>
+      <value>
+        <workerClass>NightSafety.Incidents.IncidentWorker_NightGatedTraderCaravan</workerClass>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/IncidentDef[defName="VisitorGroup"]/workerClass[text()="IncidentWorker_VisitorGroup"]</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>Defs/IncidentDef[defName="VisitorGroup"]/workerClass</xpath>
+      <value>
+        <workerClass>NightSafety.Incidents.IncidentWorker_NightGatedVisitorGroup</workerClass>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/IncidentDef[defName="TravelerGroup"]/workerClass[text()="IncidentWorker_TravelerGroup"]</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>Defs/IncidentDef[defName="TravelerGroup"]/workerClass</xpath>
+      <value>
+        <workerClass>NightSafety.Incidents.IncidentWorker_NightGatedTravelerGroup</workerClass>
+      </value>
+    </match>
+  </Operation>
+</Patch>
