@@ -97,28 +97,15 @@ namespace NightSafety
                 .Where(pawn => pawn.kindDef == NightSafetyDefOf.NightSafety_ForestSpirit && !pawn.Dead)
                 .OrderBy(pawn => pawn.thingIDNumber)
                 .ToList();
-            forestSpirit = candidates.FirstOrDefault();
+            int? ownerId = SpiritOwnershipPolicy.SelectOwnerId(candidates.Select(pawn => pawn.thingIDNumber));
+            forestSpirit = ownerId.HasValue
+                ? candidates.First(pawn => pawn.thingIDNumber == ownerId.Value)
+                : null;
 
             // Only self-repaired Spirit pawns on this map are eligible, so stray copies from reloads or
             // old saves are destroyed.
             foreach (Pawn duplicate in candidates.Where(pawn => pawn != forestSpirit))
                 duplicate.Destroy(DestroyMode.Vanish);
-        }
-
-        private void EnsureForestAffliction()
-        {
-            foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned
-                .Where(pawn => !pawn.Dead))
-            {
-                bool hasStateMarker = pawn.health.hediffSet.HasHediff(NightSafetyDefOf.NightSafety_HarasserState);
-                bool shouldHaveAffliction = ForestAfflictionPolicy.ShouldHaveAffliction(
-                    pawn.Faction?.def == NightSafetyDefOf.NightSafety_Harassers,
-                    pawn.kindDef == NightSafetyDefOf.NightSafety_Harasser,
-                    hasStateMarker);
-                if (shouldHaveAffliction
-                    && !pawn.health.hediffSet.HasHediff(NightSafetyDefOf.NightSafety_ForestAffliction))
-                    pawn.health.AddHediff(NightSafetyDefOf.NightSafety_ForestAffliction);
-            }
         }
 
         private void RepairHarasserOwnership()
@@ -142,6 +129,29 @@ namespace NightSafety
             Thing? existingEffigy = map.listerThings.ThingsOfDef(NightSafetyDefOf.NightSafety_HarassmentEffigy)
                 .OrderBy(thing => thing.thingIDNumber).FirstOrDefault();
             if (existingEffigy != null) lordJob.RegisterEffigy(existingEffigy);
+        }
+
+        public void RepairTransferredHarasserOwnership()
+        {
+            EnsureForestAffliction();
+            EnsureHarasserStateMarkers();
+            RepairHarasserOwnership();
+        }
+
+        private void EnsureForestAffliction()
+        {
+            foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned
+                .Where(pawn => !pawn.Dead))
+            {
+                bool hasStateMarker = pawn.health.hediffSet.HasHediff(NightSafetyDefOf.NightSafety_HarasserState);
+                bool shouldHaveAffliction = ForestAfflictionPolicy.ShouldHaveAffliction(
+                    pawn.Faction?.def == NightSafetyDefOf.NightSafety_Harassers,
+                    pawn.kindDef == NightSafetyDefOf.NightSafety_Harasser,
+                    hasStateMarker);
+                if (shouldHaveAffliction
+                    && !pawn.health.hediffSet.HasHediff(NightSafetyDefOf.NightSafety_ForestAffliction))
+                    pawn.health.AddHediff(NightSafetyDefOf.NightSafety_ForestAffliction);
+            }
         }
 
         private void TryScheduleHarassers()
@@ -186,12 +196,33 @@ namespace NightSafety
 
         private void TrySpawnForestSpirit()
         {
-            if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map), map, CellFinder.EdgeRoadChance_Ignore, out IntVec3 spawnCell))
-                return;
+            IntVec3 spawnCell = DeterministicEdgeSpawnCell();
+            if (!spawnCell.IsValid) return;
 
             Pawn spirit = PawnGenerator.GeneratePawn(NightSafetyDefOf.NightSafety_ForestSpirit, null);
             GenSpawn.Spawn(spirit, spawnCell, map);
             RegisterForestSpirit(spirit);
+        }
+
+        private IntVec3 DeterministicEdgeSpawnCell()
+        {
+            // Stable cell ordering avoids divergent encounter ownership in replayed or network-observed
+            // simulations: pick the lowest-index standable edge cell. Iterating only the map perimeter
+            // (EdgeCells) instead of the whole grid keeps the same result at O(perimeter) cost.
+            IntVec3 best = IntVec3.Invalid;
+            int bestIndex = int.MaxValue;
+            foreach (IntVec3 cell in CellRect.WholeMap(map).EdgeCells)
+            {
+                if (!cell.Standable(map)) continue;
+                int index = map.cellIndices.CellToIndex(cell);
+                if (index < bestIndex)
+                {
+                    bestIndex = index;
+                    best = cell;
+                }
+            }
+
+            return best;
         }
 
         public void Register(CompProtectionOven oven)

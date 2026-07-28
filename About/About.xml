@@ -7,4 +7,8 @@
     <li>1.6</li>
   </supportedVersions>
   <description>Night Safety turns nightfall into a survival problem. Work in progress.</description>
+  <modDependencies />
+  <loadAfter>
+    <li>nova.rimworldtogether</li>
+  </loadAfter>
 </ModMetaData>

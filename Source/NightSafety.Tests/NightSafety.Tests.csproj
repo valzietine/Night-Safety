@@ -16,6 +16,7 @@
     <Compile Include="../NightSafety/Core/PawnPreferenceLifecycle.cs" Link="PawnPreferenceLifecycle.cs" />
     <Compile Include="../NightSafety/Core/HarasserPolicies.cs" Link="HarasserPolicies.cs" />
     <Compile Include="../NightSafety/Core/ForestAfflictionPolicy.cs" Link="ForestAfflictionPolicy.cs" />
+    <Compile Include="../NightSafety/Core/SpiritOwnershipPolicy.cs" Link="SpiritOwnershipPolicy.cs" />
     <Compile Include="../NightSafety/Core/HarassmentThemePolicy.cs" Link="HarassmentThemePolicy.cs" />
     <Compile Include="../NightSafety/Core/NightVisitorPolicy.cs" Link="NightVisitorPolicy.cs" />
   </ItemGroup>
