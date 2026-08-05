@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <NightSafety_Harassers.label>night harassers</NightSafety_Harassers.label>
+  <NightSafety_Harassers.description>Small bands that appear only to harass settlements after dark.</NightSafety_Harassers.description>
+  <NightSafety_Harassers.pawnSingular>night harasser</NightSafety_Harassers.pawnSingular>
+  <NightSafety_Harassers.pawnsPlural>night harassers</NightSafety_Harassers.pawnsPlural>
+  <NightSafety_Harassers.fixedName>Night harassers</NightSafety_Harassers.fixedName>
+</LanguageData>

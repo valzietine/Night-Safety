@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Translator scaffold. The PawnColumnDef headerTip has no other translation path than
+  DefInjected, so it must live here to be localizable. Keep entries in sync with the
+  inline Def values under Defs/ (a DefInjected entry overrides the inline value).
+-->
+<LanguageData>
+  <NightSafety_SafetySeeking.headerTip>Seek night safety</NightSafety_SafetySeeking.headerTip>
+</LanguageData>

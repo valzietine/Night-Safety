@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <NightSafety_HarasserState.label>night harasser state</NightSafety_HarasserState.label>
+  <NightSafety_HarasserState.description>Internal persisted identity for a temporary Night Safety harasser pack.</NightSafety_HarasserState.description>
+  <NightSafety_ForestAffliction.label>forest affliction</NightSafety_ForestAffliction.label>
+  <NightSafety_ForestAffliction.description>The forest has taken root in this person's body and mind. Afflicted people are unusually resistant to recruitment, but the Forest Spirit does not recognize them as prey.</NightSafety_ForestAffliction.description>
+</LanguageData>
