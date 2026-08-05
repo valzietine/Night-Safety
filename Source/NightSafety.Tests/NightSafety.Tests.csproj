@@ -13,6 +13,7 @@
     <Compile Include="../NightSafety/Core/NightSafetyMath.cs" Link="NightSafetyMath.cs" />
     <Compile Include="../NightSafety/Core/NightEncounter.cs" Link="NightEncounter.cs" />
     <Compile Include="../NightSafety/Core/SafetyEligibilityPolicy.cs" Link="SafetyEligibilityPolicy.cs" />
+    <Compile Include="../NightSafety/Core/ContainmentPolicy.cs" Link="ContainmentPolicy.cs" />
     <Compile Include="../NightSafety/Core/PawnPreferenceLifecycle.cs" Link="PawnPreferenceLifecycle.cs" />
     <Compile Include="../NightSafety/Core/HarasserPolicies.cs" Link="HarasserPolicies.cs" />
     <Compile Include="../NightSafety/Core/ForestAfflictionPolicy.cs" Link="ForestAfflictionPolicy.cs" />

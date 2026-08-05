@@ -18,9 +18,11 @@ namespace NightSafety
         private readonly Dictionary<Pawn, int> safetyRetryAfterTick = new Dictionary<Pawn, int>();
         private int nextHarasserLocalDay = -1;
         private int lastHarasserScheduleDay = -1;
+        private NightSafetyContainment containment = new NightSafetyContainment();
 
         public NightSafetyMapComponent(Map map) : base(map)
         {
+            containment.Initialize(map);
         }
 
         public bool IsNight => NightSafetyMath.IsNight(GenLocalDate.HourFloat(map),
@@ -64,10 +66,12 @@ namespace NightSafety
             Scribe_References.Look(ref forestSpirit, "nightSafetyForestSpirit");
             Scribe_Values.Look(ref nextHarasserLocalDay, "nightSafetyNextHarasserLocalDay", -1);
             Scribe_Values.Look(ref lastHarasserScheduleDay, "nightSafetyLastHarasserScheduleDay", -1);
-            if (Scribe.mode == LoadSaveMode.PostLoadInit
-                && forestSpirit != null && (forestSpirit.DestroyedOrNull() || forestSpirit.Map != map))
+            containment ??= new NightSafetyContainment();
+            containment.ExposeData();
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                forestSpirit = null;
+                if (forestSpirit != null && (forestSpirit.DestroyedOrNull() || forestSpirit.Map != map)) forestSpirit = null;
+                containment.Initialize(map);
             }
         }
 
@@ -82,6 +86,7 @@ namespace NightSafety
             RepairHarasserOwnership();
             if (CanStartForestSpirit) TrySpawnForestSpirit();
             TryScheduleHarassers();
+            containment.Tick(IsNight);
             foreach (Pawn pawn in safetyRetryAfterTick.Keys.Where(pawn => pawn == null || pawn.DestroyedOrNull() || pawn.MapHeld != map).ToList())
                 safetyRetryAfterTick.Remove(pawn);
         }
