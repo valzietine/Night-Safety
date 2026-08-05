@@ -148,11 +148,14 @@ namespace NightSafety
             managedPawns.Remove(pawn);
         }
 
-        private IEnumerable<Pawn> PawnsToConsider()
+        private List<Pawn> PawnsToConsider()
         {
             // Managed pawns are included even once they leave the colonist list, so a pawn that is
             // captured, enslaved, or downed still gets its own area back.
-            return map.mapPawns.FreeColonistsSpawned.Concat(managedPawns).Distinct();
+            //
+            // Materialized deliberately: Apply/Release/Yield mutate managedPawns inside the loop, and
+            // a lazy Concat over that set throws "Collection was modified" mid-tick.
+            return map.mapPawns.FreeColonistsSpawned.Concat(managedPawns).Distinct().ToList();
         }
 
         private void DropDeadPawns()
