@@ -6,7 +6,21 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <description>Night Safety turns nightfall into a survival problem. Work in progress.</description>
+  <description>Night Safety turns nightfall into a survival problem.
+
+Build and fuel a protection oven to project a circular safe zone. While the oven burns through the night, colonists inside its radius are shielded; step outside and the dark is no longer empty.
+
+FEATURES
+- Protection Oven: a buildable, fuelable structure that creates a circular night safety zone while it has fuel. Its inspect panel shows the radius and current status (active, out of fuel, or inactive during daylight).
+- Forest Spirit: an automatically maintained, damage-immune presence that stalks pawns caught outside the safe zone at night and withdraws at dawn.
+- Night Harassers: small tribal packs that arrive under cover of darkness with a single persisted theme - arson, bombardment, effigy-building, or theft of your outdoor stockpiles. They keep to outdoor objectives, flee when confronted, and retreat at dawn. They belong to a hidden, incident-only faction with no settlements, diplomacy, or raid presence.
+- Autonomous Safety: an opt-in per-pawn column on the Assign tab lets colonists return to a fueled safe zone on their own at night. Drafted, forced, downed, prisoner, and slave states are never overridden.
+
+COMPATIBILITY
+Best-effort compatibility with RimWorld Together (nova.rimworldtogether). Map state is persisted and encounter ownership is kept deterministic so shared-map sessions stay consistent. This is a soft integration - RimWorld Together is not required.
+
+NOTES
+This release uses placeholder art for its buildings and the Forest Spirit. Load order is unrestricted; a soft loadAfter is declared for RimWorld Together so the optional compatibility hook applies after it when both are present.</description>
   <modDependencies />
   <loadAfter>
     <li>nova.rimworldtogether</li>

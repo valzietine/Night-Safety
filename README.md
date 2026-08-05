@@ -2,14 +2,21 @@
 
 A RimWorld 1.6 mod where nightfall is a survival problem.
 
-- A buildable, refuelable protection oven that projects a circular safe zone
-  while it burns.
-- A Forest Spirit that hunts colonists caught outside the light at night and
-  withdraws at dawn.
-- Night tribal harassers that arrive in small packs with one of four themes:
-  arson, bombardment, effigy building, or theft. They flee when confronted.
-- Colonists head for the light on their own when it gets dangerous outside;
-  each pawn can be toggled in the Assign tab.
+When night falls, colonists left outside are in real danger. This mod gives the
+colony a reliable way to keep its people safe after dark:
+
+- A buildable, refuelable protection oven that projects a circular safe zone.
+- A Forest Spirit that hunts colonists who stray outside the light at night.
+- Night tribal harassers that besiege the settlement and its stores.
+- Safe-to-safety behavior so pawns head for the light on their own.
+- Optional night containment: free colonists are kept within the lit radius
+  and their own work assignments are restored at dawn.
+- Best-effort compatibility with RimWorld Together.
+
+## Install
+
+Subscribe or drop the folder into `RimWorld/Mods`, matching the workshop folder
+name. Requires RimWorld 1.6.
 
 ## Build
 
@@ -17,13 +24,15 @@ A RimWorld 1.6 mod where nightfall is a survival problem.
 dotnet build Source/NightSafety/NightSafety.csproj -c Release
 ```
 
-Unit tests for the pure decision logic:
-
-```
-dotnet test Source/NightSafety.Tests/NightSafety.Tests.csproj
-```
+Defs and pawn columns are plain XML; no Harmony patches are used at runtime.
 
 ## Compatibility
 
-No Harmony patches; everything runs through vanilla comps, think trees, and
-incident workers.
+Night arrivals are suppressed while it's dark, and randomness is kept
+deterministic from map-local state so shared-map RimWorld Together sessions stay
+consistent. No other mod is required.
+
+## License
+
+Distribution rights for this work are held by the commissioning client. See
+`LICENSE`.
