@@ -1,6 +1,6 @@
-# Night Safety
+# Night Safety (placeholder name)
 
-A RimWorld 1.6 mod where nightfall is a survival problem.
+A mod where nightfall is a survival problem.
 
 When night falls, colonists left outside are in real danger. This mod gives the
 colony a reliable way to keep its people safe after dark:
