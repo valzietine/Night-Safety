@@ -75,8 +75,8 @@ namespace NightSafety.Lords
 
         // Reassign duties only when the target duty actually changes. The previous code
         // allocated a fresh PawnDuty for every owned pawn every tick; a PawnDuty is a passive
-        // data holder the think tree re-reads each tick, so keeping the same instance is
-        // behavior-identical while eliminating the per-tick, per-pawn allocation.
+        // data holder the think tree re-reads each tick, so keeping the same instance
+        // changes nothing and drops the per-tick, per-pawn allocation.
         private void AssignDuties()
         {
             if (lord == null) return;

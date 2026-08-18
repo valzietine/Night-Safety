@@ -34,7 +34,7 @@ namespace NightSafety.Compatibility
                 arguments[0] = stringToMap;
                 arguments[2] = harmonyPostfix;
                 patch.Invoke(harmony, arguments);
-                Log.Message("[Night Safety] Enabled the narrow RimWorld Together transferred-harasser ownership repair seam.");
+                Log.Message("[Night Safety] RimWorld Together detected, map-transfer ownership repair enabled.");
             }
             catch (Exception exception)
             {

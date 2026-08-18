@@ -3,12 +3,12 @@ using Verse;
 namespace NightSafety.Core
 {
     // Central XML-tunable configuration for Night Safety gameplay values. Keeping these
-    // here (rather than as hardcoded C# literals) lets balance be tuned from Defs without
-    // a recompile. The effigy material cost is intentionally NOT duplicated here; it is
-    // single-sourced from the NightSafety_HarassmentEffigy ThingDef's costStuffCount.
+    // in a def means balance can be tuned from XML without a recompile. The effigy material
+    // cost is not repeated here; it comes straight from the NightSafety_HarassmentEffigy
+    // ThingDef's costStuffCount.
     public sealed class HarassmentConfigDef : Def
     {
-        // Harasser throwing / effigy work (existing).
+        // Harasser throwing and effigy work.
         public ThingDef arsonProjectile = null!;
         public ThingDef bombardmentProjectile = null!;
         public float minThrowRange = 4f;

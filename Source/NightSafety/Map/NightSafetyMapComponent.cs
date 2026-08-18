@@ -211,9 +211,10 @@ namespace NightSafety
 
         private IntVec3 DeterministicEdgeSpawnCell()
         {
-            // Stable cell ordering avoids divergent encounter ownership in replayed or network-observed
-            // simulations: pick the lowest-index standable edge cell. Iterating only the map perimeter
-            // (EdgeCells) instead of the whole grid keeps the same result at O(perimeter) cost.
+            // Stable cell ordering keeps encounter ownership from diverging in replays and
+            // shared-map sessions: pick the lowest-index standable edge cell. Iterating only the
+            // map perimeter (EdgeCells) instead of the whole grid keeps the same result at a
+            // fraction of the cost.
             IntVec3 best = IntVec3.Invalid;
             int bestIndex = int.MaxValue;
             foreach (IntVec3 cell in CellRect.WholeMap(map).EdgeCells)

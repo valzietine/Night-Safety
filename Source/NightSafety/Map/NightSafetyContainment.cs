@@ -153,7 +153,7 @@ namespace NightSafety
             // Managed pawns are included even once they leave the colonist list, so a pawn that is
             // captured, enslaved, or downed still gets its own area back.
             //
-            // Materialized deliberately: Apply/Release/Yield mutate managedPawns inside the loop, and
+            // Materialized: Apply/Release/Yield mutate managedPawns inside the loop, and
             // a lazy Concat over that set throws "Collection was modified" mid-tick.
             return map.mapPawns.FreeColonistsSpawned.Concat(managedPawns).Distinct().ToList();
         }
@@ -252,7 +252,7 @@ namespace NightSafety
 
         /// <summary>
         /// Cheap change detector over the active ovens, so cells are rebuilt when one is built,
-        /// destroyed, moved, refuelled, or burns out — and not otherwise.
+        /// destroyed, moved, refuelled, or burns out. Nothing else triggers a rebuild.
         /// </summary>
         private int ActiveOvenSignature()
         {

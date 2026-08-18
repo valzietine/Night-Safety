@@ -29,7 +29,7 @@ namespace NightSafety.Core
 
         public static bool CanAttempt(bool isNight, bool isPlayerHome, int freeColonistCount, bool hasActiveHarassers)
         {
-            // The fixed cadence deliberately ignores storyteller/difficulty gates.
+            // The fixed cadence ignores storyteller and difficulty gates.
             return isNight && isPlayerHome && freeColonistCount > 0 && !hasActiveHarassers;
         }
 

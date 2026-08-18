@@ -6,10 +6,10 @@ namespace NightSafety.Incidents
 {
     // Night-visitor suppression. These workers extend the vanilla neutral-arrival workers and add
     // a single gate in front of the vanilla eligibility check: while it is local night on a player
-    // home map, trader/visitor/traveler arrivals do not fire. Everything else (raids, other events)
-    // is untouched because only these three incidents have their workerClass swapped (see
-    // Patches/NightVisitorSuppression_NightSafety.xml). Using worker subclasses keeps the core
-    // Harmony-free, consistent with the mod's API-free design.
+    // home map, trader/visitor/traveler arrivals do not fire. Raids and every other incident are untouched,
+    // since only these three incidents get their workerClass swapped (see
+    // Patches/NightVisitorSuppression_NightSafety.xml). Using worker subclasses keeps the mod
+    // Harmony-free.
     internal static class NightArrivalGate
     {
         public static bool BlockedNow(IncidentParms parms)

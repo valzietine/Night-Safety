@@ -9,7 +9,7 @@ namespace NightSafety.AI
     public sealed class JobDriver_HarassThrow : JobDriver
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
-            // Ranged harassment deliberately permits the pack to pressure the same exterior target together.
+            // Throw jobs skip reservation so the whole pack can pressure the same target together.
             => true;
 
         protected override IEnumerable<Toil> MakeNewToils()

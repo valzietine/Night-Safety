@@ -4,7 +4,7 @@ namespace NightSafety.Core
 {
     public static class NightSafetyPreferences
     {
-        // Keep the player mutation named and deterministic so compatibility layers can identify one narrow seam.
+        // Keep the mutation named and deterministic so other mods can find and wrap this one call.
         public static void SetSafetySeekingEnabled(Pawn pawn, bool enabled)
         {
             if (pawn == null || Current.Game == null) return;
