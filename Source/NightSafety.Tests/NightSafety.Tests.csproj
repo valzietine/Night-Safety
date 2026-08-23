@@ -20,5 +20,6 @@
     <Compile Include="../NightSafety/Core/SpiritOwnershipPolicy.cs" Link="SpiritOwnershipPolicy.cs" />
     <Compile Include="../NightSafety/Core/HarassmentThemePolicy.cs" Link="HarassmentThemePolicy.cs" />
     <Compile Include="../NightSafety/Core/NightVisitorPolicy.cs" Link="NightVisitorPolicy.cs" />
+    <Compile Include="../NightSafety/Core/StemrootPolicy.cs" Link="StemrootPolicy.cs" />
   </ItemGroup>
 </Project>

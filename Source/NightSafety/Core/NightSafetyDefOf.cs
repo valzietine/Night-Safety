@@ -22,6 +22,10 @@ namespace NightSafety
         public static HediffDef NightSafety_HarasserState = null!;
         public static HediffDef NightSafety_ForestAffliction = null!;
 
+        public static ThingDef NightSafety_Stemroot = null!;
+        public static ThingDef NightSafety_FilthSap = null!;
+        public static StemrootConfigDef NightSafety_StemrootConfig = null!;
+
         static NightSafetyDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(NightSafetyDefOf));
     }
 }

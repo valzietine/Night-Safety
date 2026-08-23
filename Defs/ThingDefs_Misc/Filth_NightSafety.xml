@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BaseFilth">
+    <defName>NightSafety_FilthSap</defName>
+    <label>white sap</label>
+    <description>Thick pale sap wept out by bleeding stemroot. It dries slowly and washes off in the rain.</description>
+    <statBases>
+      <Beauty>-15</Beauty>
+      <Cleanliness>-4</Cleanliness>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Filth/Spatter</texPath>
+      <color>(232, 232, 224, 170)</color>
+    </graphicData>
+    <filth>
+      <disappearsInDays>2~4</disappearsInDays>
+      <rainWashes>true</rainWashes>
+      <cleaningWorkToReduceThickness>60</cleaningWorkToReduceThickness>
+      <canFilthAttach>true</canFilthAttach>
+      <cleaningSound>Interact_CleanFilth_Fluid</cleaningSound>
+    </filth>
+  </ThingDef>
+</Defs>

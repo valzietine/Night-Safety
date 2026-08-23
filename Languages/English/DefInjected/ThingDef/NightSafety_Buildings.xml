@@ -4,4 +4,8 @@
   <NightSafety_ProtectionOven.description>A wood-fired oven whose warmth marks a circle of safety during the night.</NightSafety_ProtectionOven.description>
   <NightSafety_HarassmentEffigy.label>harassment effigy</NightSafety_HarassmentEffigy.label>
   <NightSafety_HarassmentEffigy.description>A crude marker left by night harassers. It serves no purpose beyond intimidation and obstruction.</NightSafety_HarassmentEffigy.description>
+  <NightSafety_Stemroot.label>stemroot</NightSafety_Stemroot.label>
+  <NightSafety_Stemroot.description>A mass of anomalous trees grown too dense to walk through. It blocks light and holds up a roof like a wall, and it knits itself back together after being cut into. Left alone it shifts slowly across the ground, closing old paths and opening new ones.</NightSafety_Stemroot.description>
+  <NightSafety_FilthSap.label>white sap</NightSafety_FilthSap.label>
+  <NightSafety_FilthSap.description>Thick pale sap wept out by bleeding stemroot. It dries slowly and washes off in the rain.</NightSafety_FilthSap.description>
 </LanguageData>

@@ -7,5 +7,15 @@
   <NightSafety_ContainmentZoneLabel>Night Safety</NightSafety_ContainmentZoneLabel>
   <NightSafety_ContainmentUnavailableLabel>Night safety zone unavailable</NightSafety_ContainmentUnavailableLabel>
   <NightSafety_ContainmentUnavailableText>Night Safety could not create its allowed area because this map already uses all 10 area slots. Colonists will still return to a protection zone once they are caught outside at night, but they will no longer be stopped from wandering out in the first place. Free an area slot in the Zone tab to restore full protection.</NightSafety_ContainmentUnavailableText>
+  <NightSafety_StemrootStatePlain>plain</NightSafety_StemrootStatePlain>
+  <NightSafety_StemrootStateBleeding>bleeding</NightSafety_StemrootStateBleeding>
+  <NightSafety_StemrootStateBlooming>blooming</NightSafety_StemrootStateBlooming>
+  <NightSafety_StemrootStateFruiting>fruiting</NightSafety_StemrootStateFruiting>
+  <NightSafety_StemrootStateFlushing>flushing</NightSafety_StemrootStateFlushing>
+  <NightSafety_StemrootInspectState>State: {0}</NightSafety_StemrootInspectState>
+  <NightSafety_StemrootInspectFruitIn>Fruits in {0}</NightSafety_StemrootInspectFruitIn>
+  <NightSafety_StemrootInspectStopsBleedingIn>Stops bleeding in {0}</NightSafety_StemrootInspectStopsBleedingIn>
+  <NightSafety_StemrootInspectFruitDropsIn>Fruit drops in {0}</NightSafety_StemrootInspectFruitDropsIn>
+  <NightSafety_StemrootInspectRegenerating>Regrowing</NightSafety_StemrootInspectRegenerating>
   <NightSafety_SafetySeekingTip>When enabled, {0} is restricted to the fueled protection zone at night and will not take work outside it, and will return on their own if caught outside. Their usual area is restored at dawn. Drafted pawns, forced jobs, emergencies, prisoners, and slaves are not overridden, and reassigning an area by hand overrides this for the rest of the night.</NightSafety_SafetySeekingTip>
 </LanguageData>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <NightSafety.Core.StemrootConfigDef>
+    <defName>NightSafety_StemrootConfig</defName>
+
+    <!-- Regrowth after damage. One in-game hour of quiet, then a hit point a second. -->
+    <regenDelayTicks>2500</regenDelayTicks>
+    <regenTicksPerHitPoint>60</regenTicksPerHitPoint>
+
+    <!-- How often a cell rolls for a state of its own, and how likely each outcome is. -->
+    <stateCheckIntervalTicks>2500</stateCheckIntervalTicks>
+    <bleedChance>0.02</bleedChance>
+    <bleedPollutionScale>0.08</bleedPollutionScale>
+    <bloomChance>0.06</bloomChance>
+    <bloomMinTemperature>10</bloomMinTemperature>
+    <bloomIdealTemperature>30</bloomIdealTemperature>
+    <flushChance>0.05</flushChance>
+
+    <!-- State countdowns. Bleeding and blooming run a few hours; fruit keeps two days. -->
+    <bleedDurationMinTicks>7500</bleedDurationMinTicks>
+    <bleedDurationMaxTicks>15000</bleedDurationMaxTicks>
+    <bloomDurationMinTicks>7500</bloomDurationMinTicks>
+    <bloomDurationMaxTicks>15000</bloomDurationMaxTicks>
+    <fruitDurationTicks>120000</fruitDurationTicks>
+    <sapFilthIntervalTicks>900</sapFilthIntervalTicks>
+  </NightSafety.Core.StemrootConfigDef>
+</Defs>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>NightSafety_Stemroot</defName>
+    <label>stemroot</label>
+    <description>A mass of anomalous trees grown too dense to walk through. It blocks light and holds up a roof like a wall, and it knits itself back together after being cut into. Left alone it shifts slowly across the ground, closing old paths and opening new ones.</description>
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Things/Building/Linked/NightSafety_Stemroot_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <linkType>CornerFiller</linkType>
+      <linkFlags>
+        <li>Custom1</li>
+      </linkFlags>
+      <damageData>
+        <rect>(0.15, 0.15, 0.75, 0.75)</rect>
+      </damageData>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <blockLight>true</blockLight>
+    <holdsRoof>true</holdsRoof>
+    <fillPercent>1</fillPercent>
+    <coversFloor>false</coversFloor>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>1.0</staticSunShadowHeight>
+    <neverMultiSelect>true</neverMultiSelect>
+    <rotatable>false</rotatable>
+    <canOverlapZones>false</canOverlapZones>
+    <mineable>false</mineable>
+    <fertility>0</fertility>
+    <saveCompressible>false</saveCompressible>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <statBases>
+      <MaxHitPoints>140</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <Beauty>-3</Beauty>
+    </statBases>
+    <building>
+      <isInert>true</isInert>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
+      <quickTargetable>true</quickTargetable>
+      <isTargetable>true</isTargetable>
+      <supportsWallAttachments>false</supportsWallAttachments>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+    <comps>
+      <li Class="NightSafety.Stemroot.CompProperties_Stemroot">
+        <bleedingOverlayPath>Things/Building/Stemroot/Overlay_Bleeding</bleedingOverlayPath>
+        <bloomingOverlayPath>Things/Building/Stemroot/Overlay_Blooming</bloomingOverlayPath>
+        <fruitingOverlayPath>Things/Building/Stemroot/Overlay_Fruiting</fruitingOverlayPath>
+        <flushingOverlayPath>Things/Building/Stemroot/Overlay_Flushing</flushingOverlayPath>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>
