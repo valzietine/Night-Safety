@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <DesignationDef>
+    <defName>NightSafety_CutStemroot</defName>
+    <texturePath>Designations/CutPlant</texturePath>
+    <targetType>Thing</targetType>
+  </DesignationDef>
+
+  <DesignationDef>
+    <defName>NightSafety_HarvestStemroot</defName>
+    <texturePath>Designations/HarvestPlant</texturePath>
+    <targetType>Thing</targetType>
+  </DesignationDef>
+</Defs>

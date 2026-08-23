@@ -26,5 +26,17 @@ namespace NightSafety.Core
         public int bloomDurationMaxTicks = 15000;
         public int fruitDurationTicks = 120000;
         public int sapFilthIntervalTicks = 900;
+
+        // Yields and work.
+        public int cutWoodCount = 30;
+        public int bleedingYieldCount = 20;
+        public int fruitingYieldCount = 10;
+        public int flushingYieldCount = 11;
+        public float cutWork = 1100f;
+        public float harvestWork = 420f;
+
+        // What the work costs the pawn who does it.
+        public float cutAfflictionSeverity = 0.15f;
+        public float harvestAfflictionSeverity = 0.05f;
     }
 }

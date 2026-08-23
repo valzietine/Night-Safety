@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Put the two stemroot orders next to the vanilla plant orders. Appending to the Orders
+    category is enough; the designators appear in the order they are listed, so this drops them
+    at the end of the row rather than reshuffling anything a player already knows the position
+    of. Guarded so a mod that has replaced the Orders category outright does not take the patch
+    down with it.
+  -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/DesignationCategoryDef[defName="Orders"]/specialDesignatorClasses</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/DesignationCategoryDef[defName="Orders"]/specialDesignatorClasses</xpath>
+      <value>
+        <li>NightSafety.Stemroot.Designator_CutStemroot</li>
+        <li>NightSafety.Stemroot.Designator_HarvestStemroot</li>
+      </value>
+    </match>
+  </Operation>
+</Patch>

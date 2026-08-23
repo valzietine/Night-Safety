@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThoughtDef>
+    <defName>NightSafety_Unsettled</defName>
+    <durationDays>1.5</durationDays>
+    <!-- Stacks properly rather than tapering, so clearing a stand of stemroot in one day is
+         genuinely miserable. Psychically sensitive people feel it more. -->
+    <stackLimit>6</stackLimit>
+    <stackedEffectMultiplier>1</stackedEffectMultiplier>
+    <effectMultiplyingStat>PsychicSensitivity</effectMultiplyingStat>
+    <stages>
+      <li>
+        <label>unsettled</label>
+        <description>I shouldn't have touched that tree.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

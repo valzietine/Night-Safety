@@ -30,6 +30,7 @@ namespace NightSafety.Stemroot
         private static StemrootConfigDef Config => NightSafetyDefOf.NightSafety_StemrootConfig;
 
         public StemrootState State => state;
+        public bool CanHarvestNow => StemrootPolicy.IsHarvestable(state);
 
         public override void PostExposeData()
         {
@@ -227,7 +228,58 @@ namespace NightSafety.Stemroot
                     break;
             }
 
-            if (parent.Spawned) parent.Map.mapDrawer.MapMeshDirty(parent.Position, MapMeshFlagDefOf.Things);
+            if (parent.Spawned)
+            {
+                // The state is not harvestable any more, so drop any order that assumed it was.
+                if (!StemrootPolicy.IsHarvestable(state))
+                {
+                    parent.Map.designationManager
+                        .TryRemoveDesignationOn(parent, NightSafetyDefOf.NightSafety_HarvestStemrootDesignation);
+                }
+                parent.Map.mapDrawer.MapMeshDirty(parent.Position, MapMeshFlagDefOf.Things);
+            }
+        }
+
+        public float CutWork => Config.cutWork;
+        public float HarvestWork => Config.harvestWork;
+
+        /// <summary>The whole cell comes down: wood, a dose of the affliction, and a bad memory.</summary>
+        public void FinishCut(Pawn actor)
+        {
+            Map map = parent.Map;
+            IntVec3 position = parent.Position;
+
+            StemrootWork.ApplyAffliction(actor, Config.cutAfflictionSeverity);
+            if (StemrootPolicy.AppliesUnsettled(actor.IsColonist))
+                actor.needs?.mood?.thoughts?.memories?.TryGainMemory(NightSafetyDefOf.NightSafety_Unsettled);
+
+            parent.Destroy(DestroyMode.Vanish);
+            StemrootWork.DropYield(ThingDefOf.WoodLog, Config.cutWoodCount, position, map, actor);
+        }
+
+        /// <summary>The crop comes off and the wall stays up.</summary>
+        public void FinishHarvest(Pawn actor)
+        {
+            if (!StemrootPolicy.IsHarvestable(state)) return;
+
+            ThingDef? product = ProductFor(state);
+            int count = StemrootPolicy.HarvestCount(state, Config.bleedingYieldCount,
+                Config.fruitingYieldCount, Config.flushingYieldCount);
+
+            StemrootWork.ApplyAffliction(actor, Config.harvestAfflictionSeverity);
+            if (product != null) StemrootWork.DropYield(product, count, parent.Position, parent.Map, actor);
+            SetState(StemrootPolicy.AfterHarvest(state));
+        }
+
+        private static ThingDef? ProductFor(StemrootState state)
+        {
+            switch (state)
+            {
+                case StemrootState.Bleeding: return ThingDefOf.Chemfuel;
+                case StemrootState.Fruiting: return NightSafetyDefOf.NightSafety_OddFruit;
+                case StemrootState.Flushing: return NightSafetyDefOf.NightSafety_OddFungus;
+                default: return null;
+            }
         }
 
         public override string CompInspectStringExtra()
@@ -251,6 +303,15 @@ namespace NightSafety.Stemroot
                         text.AppendLine().Append("NightSafety_StemrootInspectFruitDropsIn".Translate(period));
                         break;
                 }
+            }
+
+            if (StemrootPolicy.IsHarvestable(state))
+            {
+                ThingDef? product = ProductFor(state);
+                int count = StemrootPolicy.HarvestCount(state, Config.bleedingYieldCount,
+                    Config.fruitingYieldCount, Config.flushingYieldCount);
+                if (product != null)
+                    text.AppendLine().Append("NightSafety_StemrootInspectHarvest".Translate(count, product.label));
             }
 
             if (parent.HitPoints < parent.MaxHitPoints)

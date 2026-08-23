@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <WorkGiverDef>
+    <defName>NightSafety_CutStemroot</defName>
+    <label>cut stemroot</label>
+    <giverClass>NightSafety.Stemroot.WorkGiver_CutStemroot</giverClass>
+    <workType>PlantCutting</workType>
+    <priorityInType>90</priorityInType>
+    <verb>cut</verb>
+    <gerund>cutting</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>NightSafety_HarvestStemroot</defName>
+    <label>harvest stemroot</label>
+    <giverClass>NightSafety.Stemroot.WorkGiver_HarvestStemroot</giverClass>
+    <workType>PlantCutting</workType>
+    <priorityInType>100</priorityInType>
+    <verb>harvest</verb>
+    <gerund>harvesting</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+</Defs>

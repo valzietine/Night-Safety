@@ -237,4 +237,40 @@ namespace NightSafety.Tests
             Assert.NotEqual(StemrootPolicy.UnitRoll(1234, 7), StemrootPolicy.UnitRoll(1234, 8));
         }
     }
+
+    public class StemrootHarvestTests
+    {
+        [Fact]
+        public void OnlyLoadedStatesCanBeHarvested()
+        {
+            Assert.True(StemrootPolicy.IsHarvestable(StemrootState.Bleeding));
+            Assert.True(StemrootPolicy.IsHarvestable(StemrootState.Fruiting));
+            Assert.True(StemrootPolicy.IsHarvestable(StemrootState.Flushing));
+            Assert.False(StemrootPolicy.IsHarvestable(StemrootState.Blooming));
+            Assert.False(StemrootPolicy.IsHarvestable(StemrootState.Plain));
+        }
+
+        [Fact]
+        public void HarvestYieldsTheStateProduct()
+        {
+            Assert.Equal(20, StemrootPolicy.HarvestCount(StemrootState.Bleeding, 20, 10, 11));
+            Assert.Equal(10, StemrootPolicy.HarvestCount(StemrootState.Fruiting, 20, 10, 11));
+            Assert.Equal(11, StemrootPolicy.HarvestCount(StemrootState.Flushing, 20, 10, 11));
+            Assert.Equal(0, StemrootPolicy.HarvestCount(StemrootState.Blooming, 20, 10, 11));
+            Assert.Equal(0, StemrootPolicy.HarvestCount(StemrootState.Plain, 20, 10, 11));
+        }
+
+        [Fact]
+        public void HarvestLeavesPlainStemrootBehind()
+        {
+            Assert.Equal(StemrootState.Plain, StemrootPolicy.AfterHarvest(StemrootState.Fruiting));
+        }
+
+        [Fact]
+        public void OnlyColonistWorkCarriesTheMoodPenalty()
+        {
+            Assert.True(StemrootPolicy.AppliesUnsettled(true));
+            Assert.False(StemrootPolicy.AppliesUnsettled(false));
+        }
+    }
 }

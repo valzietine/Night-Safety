@@ -25,6 +25,21 @@ namespace NightSafety
         public static ThingDef NightSafety_Stemroot = null!;
         public static ThingDef NightSafety_FilthSap = null!;
         public static StemrootConfigDef NightSafety_StemrootConfig = null!;
+        public static ThingDef NightSafety_OddFruit = null!;
+        public static ThingDef NightSafety_OddFungus = null!;
+        public static ThoughtDef NightSafety_Unsettled = null!;
+        public static HediffDef NightSafety_OddFruitFullness = null!;
+
+        // Cut and harvest each name a JobDef and a DesignationDef, so the fields are aliased
+        // back onto the one defName the pair shares.
+        [DefAlias("NightSafety_CutStemroot")]
+        public static JobDef NightSafety_CutStemrootJob = null!;
+        [DefAlias("NightSafety_HarvestStemroot")]
+        public static JobDef NightSafety_HarvestStemrootJob = null!;
+        [DefAlias("NightSafety_CutStemroot")]
+        public static DesignationDef NightSafety_CutStemrootDesignation = null!;
+        [DefAlias("NightSafety_HarvestStemroot")]
+        public static DesignationDef NightSafety_HarvestStemrootDesignation = null!;
 
         static NightSafetyDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(NightSafetyDefOf));
     }

@@ -15,4 +15,14 @@
     <driverClass>NightSafety.AI.JobDriver_BuildHarassmentEffigy</driverClass>
     <reportString>building a harassment effigy.</reportString>
   </JobDef>
+  <JobDef>
+    <defName>NightSafety_CutStemroot</defName>
+    <driverClass>NightSafety.Stemroot.JobDriver_CutStemroot</driverClass>
+    <reportString>cutting down TargetA.</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>NightSafety_HarvestStemroot</defName>
+    <driverClass>NightSafety.Stemroot.JobDriver_HarvestStemroot</driverClass>
+    <reportString>harvesting TargetA.</reportString>
+  </JobDef>
 </Defs>

@@ -153,6 +153,34 @@ namespace NightSafety.Core
             return StemrootState.Plain;
         }
 
+
+        public static bool IsHarvestable(StemrootState state)
+        {
+            return state == StemrootState.Bleeding
+                || state == StemrootState.Fruiting
+                || state == StemrootState.Flushing;
+        }
+
+        public static int HarvestCount(StemrootState state, int bleedingCount, int fruitingCount, int flushingCount)
+        {
+            switch (state)
+            {
+                case StemrootState.Bleeding: return bleedingCount;
+                case StemrootState.Fruiting: return fruitingCount;
+                case StemrootState.Flushing: return flushingCount;
+                default: return 0;
+            }
+        }
+
+        /// <summary>Harvesting takes the crop and leaves the wall standing.</summary>
+        public static StemrootState AfterHarvest(StemrootState state) => StemrootState.Plain;
+
+        /// <summary>
+        /// The mood hit is for touching the tree on purpose. Fire, raiders, and anything else that
+        /// kills stemroot without a colonist swinging at it leaves no memory.
+        /// </summary>
+        public static bool AppliesUnsettled(bool destroyedByColonist) => destroyedByColonist;
+
         private static float Clamp01(float value)
         {
             if (value < 0f) return 0f;

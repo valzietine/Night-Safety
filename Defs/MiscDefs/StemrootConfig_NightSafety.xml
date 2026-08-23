@@ -23,5 +23,17 @@
     <bloomDurationMaxTicks>15000</bloomDurationMaxTicks>
     <fruitDurationTicks>120000</fruitDurationTicks>
     <sapFilthIntervalTicks>900</sapFilthIntervalTicks>
+
+    <!-- Yields. All of these are meant to be trace amounts, not a farm. -->
+    <cutWoodCount>30</cutWoodCount>
+    <bleedingYieldCount>20</bleedingYieldCount>
+    <fruitingYieldCount>10</fruitingYieldCount>
+    <flushingYieldCount>11</flushingYieldCount>
+    <cutWork>1100</cutWork>
+    <harvestWork>420</harvestWork>
+
+    <!-- What touching the roots costs. The affliction is the real gate on farming them. -->
+    <cutAfflictionSeverity>0.15</cutAfflictionSeverity>
+    <harvestAfflictionSeverity>0.05</harvestAfflictionSeverity>
   </NightSafety.Core.StemrootConfigDef>
 </Defs>

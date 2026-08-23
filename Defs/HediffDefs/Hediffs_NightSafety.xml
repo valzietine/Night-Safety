@@ -15,5 +15,30 @@
     <description>The forest has taken root in this person's body and mind. Afflicted people are unusually resistant to recruitment, but the Forest Spirit does not recognize them as prey.</description>
     <isBad>true</isBad>
     <scenarioCanAdd>false</scenarioCanAdd>
+    <!-- Cutting and harvesting stemroot pushes this up in small steps. The cap keeps repeated
+         work from running the severity off the end of the scale. Harassers still arrive with
+         the default starting severity, which is unchanged. -->
+    <maxSeverity>1</maxSeverity>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>NightSafety_OddFruitFullness</defName>
+    <label>odd fruit fullness</label>
+    <hediffClass>HediffWithComps</hediffClass>
+    <description>Odd fruit sits heavy. Hunger comes on more slowly than it should while it lasts.</description>
+    <isBad>false</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <maxSeverity>1</maxSeverity>
+    <defaultLabelColor>(0.6, 0.8, 0.6)</defaultLabelColor>
+    <stages>
+      <li>
+        <hungerRateFactor>0.7</hungerRateFactor>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.5</severityPerDay>
+      </li>
+    </comps>
   </HediffDef>
 </Defs>

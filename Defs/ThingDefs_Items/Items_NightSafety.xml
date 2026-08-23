@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="PlantFoodRawBase">
+    <defName>NightSafety_OddFruit</defName>
+    <label>odd fruit</label>
+    <description>A heavy fruit pulled off blooming stemroot. The flesh inside is marbled and faintly warm, and it satisfies like meat and vegetables at the same time. People who eat it stay full for longer than they should.</description>
+    <possessionCount>10</possessionCount>
+    <graphicData>
+      <texPath>Things/Item/NightSafety_OddFruit</texPath>
+    </graphicData>
+    <statBases>
+      <MarketValue>2.2</MarketValue>
+      <Nutrition>0.10</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>VegetableOrFruit, Meat</foodType>
+      <tasteThought>AteRawFood</tasteThought>
+      <outcomeDoers>
+        <li Class="RimWorld.IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>NightSafety_OddFruitFullness</hediffDef>
+          <severity>0.35</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>20</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="PlantFoodRawBase">
+    <defName>NightSafety_OddFungus</defName>
+    <label>odd fungus</label>
+    <description>Pale fungal flesh cut from flushing stemroot. It cooks down like any other raw fungus, and tastes about as good.</description>
+    <possessionCount>10</possessionCount>
+    <graphicData>
+      <texPath>Things/Item/NightSafety_OddFungus</texPath>
+    </graphicData>
+    <statBases>
+      <MarketValue>1.1</MarketValue>
+    </statBases>
+    <ingestible>
+      <foodType>Fungus</foodType>
+    </ingestible>
+    <ingredient>
+      <mergeCompatibilityTags>
+        <li MayRequire="Ludeon.RimWorld.Ideology">Fungus</li>
+      </mergeCompatibilityTags>
+    </ingredient>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>30</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

@@ -6,6 +6,10 @@
   <NightSafety_HarassmentEffigy.description>A crude marker left by night harassers. It serves no purpose beyond intimidation and obstruction.</NightSafety_HarassmentEffigy.description>
   <NightSafety_Stemroot.label>stemroot</NightSafety_Stemroot.label>
   <NightSafety_Stemroot.description>A mass of anomalous trees grown too dense to walk through. It blocks light and holds up a roof like a wall, and it knits itself back together after being cut into. Left alone it shifts slowly across the ground, closing old paths and opening new ones.</NightSafety_Stemroot.description>
+  <NightSafety_OddFruit.label>odd fruit</NightSafety_OddFruit.label>
+  <NightSafety_OddFruit.description>A heavy fruit pulled off blooming stemroot. The flesh inside is marbled and faintly warm, and it satisfies like meat and vegetables at the same time. People who eat it stay full for longer than they should.</NightSafety_OddFruit.description>
+  <NightSafety_OddFungus.label>odd fungus</NightSafety_OddFungus.label>
+  <NightSafety_OddFungus.description>Pale fungal flesh cut from flushing stemroot. It cooks down like any other raw fungus, and tastes about as good.</NightSafety_OddFungus.description>
   <NightSafety_FilthSap.label>white sap</NightSafety_FilthSap.label>
   <NightSafety_FilthSap.description>Thick pale sap wept out by bleeding stemroot. It dries slowly and washes off in the rain.</NightSafety_FilthSap.description>
 </LanguageData>
