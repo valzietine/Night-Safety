@@ -35,5 +35,12 @@
     <!-- What touching the roots costs. The affliction is the real gate on farming them. -->
     <cutAfflictionSeverity>0.15</cutAfflictionSeverity>
     <harvestAfflictionSeverity>0.05</harvestAfflictionSeverity>
+
+    <!-- Shifting. A handful of cells per event, so pathing is not rebuilt continuously. -->
+    <shiftIntervalTicks>2500</shiftIntervalTicks>
+    <growCellsPerShift>3</growCellsPerShift>
+    <recedeCellsPerShift>2</recedeCellsPerShift>
+    <densityFraction>0.12</densityFraction>
+    <ovenGraceCells>2</ovenGraceCells>
   </NightSafety.Core.StemrootConfigDef>
 </Defs>

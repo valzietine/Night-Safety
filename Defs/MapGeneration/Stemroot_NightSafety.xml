@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    Order 1150 puts stemroot in the late non-critical band, after rock, ruins, and the player
+    start spot are settled, so it fills in around them instead of fighting them for cells.
+  -->
+  <GenStepDef>
+    <defName>NightSafety_Stemroot</defName>
+    <order>1150</order>
+    <genStep Class="NightSafety.Stemroot.GenStep_Stemroot">
+      <countPer10kCellsRange><min>1.2</min><max>2.4</max></countPer10kCellsRange>
+      <patchRadiusRange><min>4</min><max>9</max></patchRadiusRange>
+      <patchDensity>0.72</patchDensity>
+      <playerStartClearance>22</playerStartClearance>
+    </genStep>
+  </GenStepDef>
+</Defs>

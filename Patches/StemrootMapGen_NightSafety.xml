@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Add the stemroot gen step to the two generators the player actually lands on: their own
+    colony maps and faction settlement maps. Encounter and escape-ship maps are left alone; a
+    short tactical map full of impassable walls is not what the roots are for. Each add is
+    guarded so a mod that has replaced one generator cannot take the other one down with it.
+  -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/MapGeneratorDef[defName="Base_Player"]/genSteps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/MapGeneratorDef[defName="Base_Player"]/genSteps</xpath>
+      <value>
+        <li>NightSafety_Stemroot</li>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/MapGeneratorDef[defName="Base_Faction"]/genSteps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/MapGeneratorDef[defName="Base_Faction"]/genSteps</xpath>
+      <value>
+        <li>NightSafety_Stemroot</li>
+      </value>
+    </match>
+  </Operation>
+</Patch>

@@ -3,7 +3,8 @@ using Verse;
 namespace NightSafety.Core
 {
     // Every stemroot number lives here rather than in C# literals, so a balance pass is a Def
-    // edit instead of a rebuild.
+    // edit instead of a rebuild. The yields and the affliction costs in particular are expected
+    // to move around during tuning.
     public sealed class StemrootConfigDef : Def
     {
         // Regrowth after damage.
@@ -38,5 +39,12 @@ namespace NightSafety.Core
         // What the work costs the pawn who does it.
         public float cutAfflictionSeverity = 0.15f;
         public float harvestAfflictionSeverity = 0.05f;
+
+        // Shifting.
+        public int shiftIntervalTicks = 2500;
+        public int growCellsPerShift = 3;
+        public int recedeCellsPerShift = 2;
+        public float densityFraction = 0.12f;
+        public int ovenGraceCells = 2;
     }
 }

@@ -16,9 +16,9 @@ namespace NightSafety.Core
     /// <summary>
     /// Pure decision layer for stemroot. Everything here is deterministic and free of Verse, so
     /// the rules can be tested directly and so two peers running the same simulation land on
-    /// the same answer. There is no <c>Rand</c> anywhere in this file on purpose: state rolls are
-    /// hashed from the thing ID and the game tick instead, which keeps them reproducible without
-    /// touching shared random state.
+    /// the same answer. There is no <c>Rand</c> anywhere in this file on purpose: state rolls and
+    /// shift picks are hashed from the thing ID and the game tick instead, which keeps them
+    /// reproducible without touching shared random state.
     /// </summary>
     public static class StemrootPolicy
     {
@@ -153,7 +153,6 @@ namespace NightSafety.Core
             return StemrootState.Plain;
         }
 
-
         public static bool IsHarvestable(StemrootState state)
         {
             return state == StemrootState.Bleeding
@@ -180,6 +179,39 @@ namespace NightSafety.Core
         /// kills stemroot without a colonist swinging at it leaves no memory.
         /// </summary>
         public static bool AppliesUnsettled(bool destroyedByColonist) => destroyedByColonist;
+
+        public static int TargetCount(int growableCellCount, float densityFraction)
+        {
+            if (growableCellCount <= 0 || densityFraction <= 0f) return 0;
+            float clamped = densityFraction > 1f ? 1f : densityFraction;
+            return (int)(growableCellCount * clamped + 0.5f);
+        }
+
+        public static int GrowBudget(int currentCount, int targetCount, int budget)
+        {
+            int room = targetCount - currentCount;
+            if (room <= 0 || budget <= 0) return 0;
+            return room < budget ? room : budget;
+        }
+
+        public static int RecedeBudget(int currentCount, int budget)
+        {
+            if (currentCount <= 0 || budget <= 0) return 0;
+            return currentCount < budget ? currentCount : budget;
+        }
+
+        /// <summary>
+        /// The grace the player was promised: nothing grows inside an oven's radius, plus a couple
+        /// of cells, so the safe zone cannot be walled shut from the outside.
+        /// </summary>
+        public static bool BlockedByOven(int distanceSquared, float ovenRadius, int graceCells)
+        {
+            float radius = (float.IsNaN(ovenRadius) || float.IsInfinity(ovenRadius) || ovenRadius < 0f)
+                ? 0f
+                : ovenRadius;
+            float blocked = radius + graceCells;
+            return distanceSquared <= blocked * blocked;
+        }
 
         private static float Clamp01(float value)
         {

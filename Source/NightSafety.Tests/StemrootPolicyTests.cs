@@ -273,4 +273,64 @@ namespace NightSafety.Tests
             Assert.False(StemrootPolicy.AppliesUnsettled(false));
         }
     }
+
+    public class StemrootShiftTests
+    {
+        [Fact]
+        public void GrowthStopsAtTheTargetDensity()
+        {
+            Assert.Equal(3, StemrootPolicy.GrowBudget(100, 200, 3));
+            Assert.Equal(0, StemrootPolicy.GrowBudget(200, 200, 3));
+            Assert.Equal(0, StemrootPolicy.GrowBudget(400, 200, 3));
+        }
+
+        [Fact]
+        public void GrowthNeverOvershootsTheTarget()
+        {
+            Assert.Equal(1, StemrootPolicy.GrowBudget(199, 200, 3));
+        }
+
+        [Fact]
+        public void RecessionIsBoundedByWhatExists()
+        {
+            Assert.Equal(2, StemrootPolicy.RecedeBudget(100, 2));
+            Assert.Equal(1, StemrootPolicy.RecedeBudget(1, 2));
+            Assert.Equal(0, StemrootPolicy.RecedeBudget(0, 2));
+        }
+
+        [Fact]
+        public void TargetCountFollowsTheDensityFraction()
+        {
+            Assert.Equal(150, StemrootPolicy.TargetCount(1000, 0.15f));
+            Assert.Equal(0, StemrootPolicy.TargetCount(1000, 0f));
+            Assert.Equal(0, StemrootPolicy.TargetCount(0, 0.15f));
+        }
+
+        [Fact]
+        public void TargetCountClampsAnAbsurdDensity()
+        {
+            Assert.Equal(1000, StemrootPolicy.TargetCount(1000, 5f));
+            Assert.Equal(0, StemrootPolicy.TargetCount(1000, -1f));
+        }
+
+        [Fact]
+        public void OvensKeepTheirRadiusPlusTwoClear()
+        {
+            // Radius 12 plus the two cell grace: 14 is blocked, 15 is not.
+            Assert.True(StemrootPolicy.BlockedByOven(14 * 14, 12f, 2));
+            Assert.False(StemrootPolicy.BlockedByOven(15 * 15, 12f, 2));
+        }
+
+        [Fact]
+        public void TheOvenCellItselfIsAlwaysBlocked()
+        {
+            Assert.True(StemrootPolicy.BlockedByOven(0, 0f, 2));
+        }
+
+        [Fact]
+        public void UnusableOvenRadiusStillBlocksNothingOutsideTheGrace()
+        {
+            Assert.False(StemrootPolicy.BlockedByOven(9, float.NaN, 2));
+        }
+    }
 }
