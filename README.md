@@ -6,6 +6,8 @@ When night falls, colonists left outside are in real danger. This mod gives the
 colony a reliable way to keep its people safe after dark:
 
 - A buildable, refuelable protection oven that projects a circular safe zone.
+- Stemroot: impassable walls of anomalous trees that grow across the map, shift
+  over time, and can be cut for wood or harvested for odd fruit and odd fungus.
 - A Forest Spirit that hunts colonists who stray outside the light at night.
 - Night tribal harassers that besiege the settlement and its stores.
 - Safe-to-safety behavior so pawns head for the light on their own.
@@ -25,6 +27,9 @@ dotnet build Source/NightSafety/NightSafety.csproj -c Release
 ```
 
 Defs and pawn columns are plain XML; no Harmony patches are used at runtime.
+
+The stemroot art is a placeholder for now: a flat wall texture and four coloured
+squares for the bleeding, blooming, fruiting, and flushing states.
 
 ## Compatibility
 
