@@ -180,6 +180,48 @@ namespace NightSafety.Core
         /// </summary>
         public static bool AppliesUnsettled(bool destroyedByColonist) => destroyedByColonist;
 
+        /// <summary>
+        /// Distance from a patch centre, measured in a frame stretched across the patch's own
+        /// axis so a stand comes out as a run of roots rather than a disc. A
+        /// <paramref name="stretch"/> of 1 is the plain circular measure; anything higher spends
+        /// radius faster sideways than lengthways, which leaves the patch long and narrow along
+        /// <paramref name="axisRadians"/>. Values below 1 are treated as 1 so a bad Def value
+        /// cannot turn the patch inside out.
+        /// </summary>
+        public static float PatchDistance(float dx, float dz, float axisRadians, float stretch)
+        {
+            double cos = System.Math.Cos(axisRadians);
+            double sin = System.Math.Sin(axisRadians);
+
+            double along = (dx * cos) + (dz * sin);
+            double across = (dz * cos) - (dx * sin);
+            across *= stretch < 1f ? 1f : stretch;
+
+            return (float)System.Math.Sqrt((along * along) + (across * across));
+        }
+
+        /// <summary>
+        /// How likely one cell inside a patch is to be filled. Everything inside the solid core
+        /// comes back certain, so the middle of a stand reads as a wall instead of a speckle;
+        /// past the core the chance falls off linearly to nothing at the rim, which is what keeps
+        /// the edge ragged. The old fill thinned from the centre outwards instead, which left
+        /// even the middle of a patch about a quarter holes.
+        /// </summary>
+        public static float PatchFillChance(float distance, float radius, float solidCoreFraction)
+        {
+            if (radius <= 0f) return distance <= 0f ? 1f : 0f;
+            if (distance >= radius) return 0f;
+            if (distance <= 0f) return 1f;
+
+            float core = Clamp01(solidCoreFraction) * radius;
+            if (distance <= core) return 1f;
+
+            float band = radius - core;
+            if (band <= 0f) return 1f;
+
+            return 1f - ((distance - core) / band);
+        }
+
         public static int TargetCount(int growableCellCount, float densityFraction)
         {
             if (growableCellCount <= 0 || densityFraction <= 0f) return 0;

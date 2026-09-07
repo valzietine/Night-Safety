@@ -332,5 +332,105 @@ namespace NightSafety.Tests
         {
             Assert.False(StemrootPolicy.BlockedByOven(9, float.NaN, 2));
         }
+        [Fact]
+        public void TheMiddleOfAPatchComesOutSolid()
+        {
+            // The old fill thinned from the centre outwards, so even the core of a stand was
+            // roughly a quarter holes. Anything inside the solid core is now certain.
+            Assert.Equal(1f, StemrootPolicy.PatchFillChance(0f, 9f, 0.55f));
+            Assert.Equal(1f, StemrootPolicy.PatchFillChance(4f, 9f, 0.55f));
+        }
+
+        [Fact]
+        public void TheCoreBoundaryItselfIsStillSolid()
+        {
+            Assert.Equal(1f, StemrootPolicy.PatchFillChance(4.95f, 9f, 0.55f));
+        }
+
+        [Fact]
+        public void PastTheCoreTheChanceFallsOffWithoutReachingEitherEnd()
+        {
+            float chance = StemrootPolicy.PatchFillChance(7f, 9f, 0.55f);
+            Assert.True(chance > 0f);
+            Assert.True(chance < 1f);
+        }
+
+        [Fact]
+        public void TheFalloffIsMonotonicAcrossTheOuterBand()
+        {
+            float previous = 1.1f;
+            for (float distance = 5f; distance <= 9f; distance += 0.5f)
+            {
+                float chance = StemrootPolicy.PatchFillChance(distance, 9f, 0.55f);
+                Assert.True(chance < previous);
+                previous = chance;
+            }
+        }
+
+        [Fact]
+        public void NothingSpawnsAtOrBeyondTheRim()
+        {
+            Assert.Equal(0f, StemrootPolicy.PatchFillChance(9f, 9f, 0.55f));
+            Assert.Equal(0f, StemrootPolicy.PatchFillChance(12f, 9f, 0.55f));
+        }
+
+        [Fact]
+        public void AFullCoreFillsTheWholePatch()
+        {
+            Assert.Equal(1f, StemrootPolicy.PatchFillChance(8.9f, 9f, 1f));
+        }
+
+        [Fact]
+        public void NoCoreLeavesAPlainFalloffFromTheCentre()
+        {
+            Assert.Equal(1f, StemrootPolicy.PatchFillChance(0f, 10f, 0f));
+            Assert.Equal(0.5f, StemrootPolicy.PatchFillChance(5f, 10f, 0f), 4);
+        }
+
+        [Fact]
+        public void ADegeneratePatchStillFillsItsOwnCentre()
+        {
+            Assert.Equal(1f, StemrootPolicy.PatchFillChance(0f, 0f, 0.55f));
+        }
+
+        [Fact]
+        public void NoStretchMeasuresPlainDistance()
+        {
+            Assert.Equal(5f, StemrootPolicy.PatchDistance(3f, 4f, 0f, 1f), 4);
+        }
+
+        [Fact]
+        public void StretchLeavesTheAlongAxisAlone()
+        {
+            // Axis along +x: an offset of 6 down that axis is still 6 however hard we stretch.
+            Assert.Equal(6f, StemrootPolicy.PatchDistance(6f, 0f, 0f, 2.5f), 4);
+        }
+
+        [Fact]
+        public void StretchPushesTheAcrossAxisOut()
+        {
+            // Axis along +x: an offset of 2 across it reads as 5 once stretched by 2.5, so the
+            // patch runs out of radius sooner sideways than lengthways.
+            Assert.Equal(5f, StemrootPolicy.PatchDistance(0f, 2f, 0f, 2.5f), 4);
+        }
+
+        [Fact]
+        public void TheStretchAxisRotatesWithTheAngle()
+        {
+            // Same offset, axis turned a quarter turn: what was along the axis is now across it.
+            float along = StemrootPolicy.PatchDistance(0f, 6f, (float)(System.Math.PI / 2.0), 2.5f);
+            Assert.Equal(6f, along, 3);
+        }
+
+        [Fact]
+        public void AStretchedPatchIsLongerThanItIsWide()
+        {
+            const float radius = 9f;
+            float lengthways = StemrootPolicy.PatchDistance(8f, 0f, 0f, 2.2f);
+            float sideways = StemrootPolicy.PatchDistance(0f, 8f, 0f, 2.2f);
+            Assert.True(lengthways < radius);
+            Assert.True(sideways > radius);
+        }
+
     }
 }
