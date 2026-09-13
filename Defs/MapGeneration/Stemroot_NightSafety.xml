@@ -9,7 +9,7 @@
     <order>1150</order>
     <genStep Class="NightSafety.Stemroot.GenStep_Stemroot">
       <countPer10kCellsRange><min>1.2</min><max>2.4</max></countPer10kCellsRange>
-      <patchRadiusRange><min>4</min><max>9</max></patchRadiusRange>
+      <patchRadiusRange><min>5</min><max>11</max></patchRadiusRange>
       <!--
         A patch fills solid out to this share of its radius and only breaks up over the band past
         it, so the middle of a stand is a wall and only the rim is ragged. The stretch runs each
@@ -18,7 +18,7 @@
         ellipse of semi-major radius and semi-minor radius over stretch: move the radius with it.
       -->
       <solidCoreFraction>0.55</solidCoreFraction>
-      <patchStretchRange><min>1.7</min><max>2.5</max></patchStretchRange>
+      <patchStretchRange><min>2.6</min><max>3.8</max></patchStretchRange>
       <playerStartClearance>22</playerStartClearance>
     </genStep>
   </GenStepDef>
