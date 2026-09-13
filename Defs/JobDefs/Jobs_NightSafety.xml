@@ -18,7 +18,7 @@
   <JobDef>
     <defName>NightSafety_CutStemroot</defName>
     <driverClass>NightSafety.Stemroot.JobDriver_CutStemroot</driverClass>
-    <reportString>cutting down TargetA.</reportString>
+    <reportString>chopping down TargetA.</reportString>
   </JobDef>
   <JobDef>
     <defName>NightSafety_HarvestStemroot</defName>

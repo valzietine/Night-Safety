@@ -2,12 +2,12 @@
 <Defs>
   <WorkGiverDef>
     <defName>NightSafety_CutStemroot</defName>
-    <label>cut stemroot</label>
+    <label>chop stemroot</label>
     <giverClass>NightSafety.Stemroot.WorkGiver_CutStemroot</giverClass>
     <workType>PlantCutting</workType>
     <priorityInType>90</priorityInType>
-    <verb>cut</verb>
-    <gerund>cutting</gerund>
+    <verb>chop</verb>
+    <gerund>chopping</gerund>
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>

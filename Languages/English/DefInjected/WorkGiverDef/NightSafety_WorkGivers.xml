@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <NightSafety_CutStemroot.label>cut stemroot</NightSafety_CutStemroot.label>
-  <NightSafety_CutStemroot.verb>cut</NightSafety_CutStemroot.verb>
-  <NightSafety_CutStemroot.gerund>cutting</NightSafety_CutStemroot.gerund>
+  <NightSafety_CutStemroot.label>chop stemroot</NightSafety_CutStemroot.label>
+  <NightSafety_CutStemroot.verb>chop</NightSafety_CutStemroot.verb>
+  <NightSafety_CutStemroot.gerund>chopping</NightSafety_CutStemroot.gerund>
   <NightSafety_HarvestStemroot.label>harvest stemroot</NightSafety_HarvestStemroot.label>
   <NightSafety_HarvestStemroot.verb>harvest</NightSafety_HarvestStemroot.verb>
   <NightSafety_HarvestStemroot.gerund>harvesting</NightSafety_HarvestStemroot.gerund>

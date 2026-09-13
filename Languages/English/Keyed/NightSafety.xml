@@ -7,8 +7,8 @@
   <NightSafety_ContainmentZoneLabel>Night Safety</NightSafety_ContainmentZoneLabel>
   <NightSafety_ContainmentUnavailableLabel>Night safety zone unavailable</NightSafety_ContainmentUnavailableLabel>
   <NightSafety_ContainmentUnavailableText>Night Safety could not create its allowed area because this map already uses all 10 area slots. Colonists will still return to a protection zone once they are caught outside at night, but they will no longer be stopped from wandering out in the first place. Free an area slot in the Zone tab to restore full protection.</NightSafety_ContainmentUnavailableText>
-  <NightSafety_DesignatorCutStemroot>Cut stemroot</NightSafety_DesignatorCutStemroot>
-  <NightSafety_DesignatorCutStemrootDesc>Order stemroot to be cut down for wood. Whoever does the work picks up the forest affliction and will be unsettled by it afterwards.</NightSafety_DesignatorCutStemrootDesc>
+  <NightSafety_DesignatorCutStemroot>Chop stemroot</NightSafety_DesignatorCutStemroot>
+  <NightSafety_DesignatorCutStemrootDesc>Order stemroot to be chopped down for wood. Whoever does the work picks up the forest affliction and will be unsettled by it afterwards.</NightSafety_DesignatorCutStemrootDesc>
   <NightSafety_DesignatorHarvestStemroot>Harvest stemroot</NightSafety_DesignatorHarvestStemroot>
   <NightSafety_DesignatorHarvestStemrootDesc>Order bleeding, fruiting, or flushing stemroot to be harvested. The stemroot itself is left standing, and the work carries a smaller dose of the forest affliction.</NightSafety_DesignatorHarvestStemrootDesc>
   <NightSafety_MessageMustDesignateStemroot>Must designate stemroot.</NightSafety_MessageMustDesignateStemroot>
