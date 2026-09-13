@@ -432,5 +432,53 @@ namespace NightSafety.Tests
             Assert.True(sideways > radius);
         }
 
+        [Fact]
+        public void AnUnarmedScheduleShiftsAtTheNextOpportunity()
+        {
+            // -1 is what a freshly constructed component carries, and it means "shift now".
+            Assert.True(StemrootPolicy.ShouldShiftNow(-1, 40000));
+        }
+
+        [Fact]
+        public void AnArmedScheduleWaitsForItsDeadline()
+        {
+            Assert.False(StemrootPolicy.ShouldShiftNow(42500, 40000));
+            Assert.True(StemrootPolicy.ShouldShiftNow(42500, 42500));
+            Assert.True(StemrootPolicy.ShouldShiftNow(42500, 42501));
+        }
+
+        [Fact]
+        public void ATransferredMapIsArmedFromTheReceiversOwnClock()
+        {
+            // The sending peer's absolute tick means nothing here: the two peers run different
+            // TicksGame on a shared map, so the deadline has to be built from the receiver's now.
+            Assert.Equal(40000 + 2500, StemrootPolicy.ShiftTickAfterTransfer(40000, 2500));
+        }
+
+        [Fact]
+        public void ATransferredMapDoesNotShiftOnArrival()
+        {
+            // The defect this guards: a received map left unarmed shifts on its very next hash
+            // interval and immediately walks away from the sender's copy.
+            const int now = 38001;
+            int armed = StemrootPolicy.ShiftTickAfterTransfer(now, 2500);
+            Assert.False(StemrootPolicy.ShouldShiftNow(armed, now));
+        }
+
+        [Fact]
+        public void ATransferredMapStillShiftsOnceTheIntervalHasPassed()
+        {
+            const int now = 38001;
+            int armed = StemrootPolicy.ShiftTickAfterTransfer(now, 2500);
+            Assert.True(StemrootPolicy.ShouldShiftNow(armed, now + 2500));
+        }
+
+        [Fact]
+        public void ANonsenseIntervalStillAdvancesTheDeadline()
+        {
+            Assert.True(StemrootPolicy.ShiftTickAfterTransfer(40000, 0) > 40000);
+            Assert.True(StemrootPolicy.ShiftTickAfterTransfer(40000, -5) > 40000);
+        }
+
     }
 }

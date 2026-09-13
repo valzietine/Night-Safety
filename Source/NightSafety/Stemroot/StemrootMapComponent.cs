@@ -3,7 +3,6 @@ using System.Linq;
 using NightSafety.Buildings;
 using NightSafety.Core;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace NightSafety.Stemroot
@@ -39,9 +38,20 @@ namespace NightSafety.Stemroot
             if (!map.IsHashIntervalTick(250)) return;
 
             int now = Find.TickManager.TicksGame;
-            if (nextShiftTick >= 0 && now < nextShiftTick) return;
-            nextShiftTick = now + Mathf.Max(1, Config.shiftIntervalTicks);
+            if (!StemrootPolicy.ShouldShiftNow(nextShiftTick, now)) return;
+            nextShiftTick = StemrootPolicy.ShiftTickAfterTransfer(now, Config.shiftIntervalTicks);
             Shift(now);
+        }
+
+        /// <summary>
+        /// Arms the shift deadline on a map that has just come across from another player. The
+        /// transfer carries things and terrain but not map components, so this one arrives unset
+        /// and would otherwise shift on its first check and drift away from the sender's copy.
+        /// </summary>
+        public void ArmShiftAfterTransfer()
+        {
+            nextShiftTick = StemrootPolicy.ShiftTickAfterTransfer(
+                Find.TickManager.TicksGame, Config.shiftIntervalTicks);
         }
 
         private void Shift(int now)

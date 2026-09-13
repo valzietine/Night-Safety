@@ -34,7 +34,7 @@ namespace NightSafety.Compatibility
                 arguments[0] = stringToMap;
                 arguments[2] = harmonyPostfix;
                 patch.Invoke(harmony, arguments);
-                Log.Message("[Night Safety] RimWorld Together detected, map-transfer ownership repair enabled.");
+                Log.Message("[Night Safety] RimWorld Together detected, map-transfer repairs enabled.");
             }
             catch (Exception exception)
             {
@@ -44,7 +44,9 @@ namespace NightSafety.Compatibility
 
         private static void AfterStringToMap(Map __result)
         {
-            __result?.GetComponent<NightSafetyMapComponent>()?.RepairTransferredHarasserOwnership();
+            if (__result == null) return;
+            __result.GetComponent<NightSafetyMapComponent>()?.RepairTransferredHarasserOwnership();
+            __result.GetComponent<Stemroot.StemrootMapComponent>()?.ArmShiftAfterTransfer();
         }
     }
 }

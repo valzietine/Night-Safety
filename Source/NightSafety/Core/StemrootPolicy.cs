@@ -222,6 +222,28 @@ namespace NightSafety.Core
             return 1f - ((distance - core) / band);
         }
 
+        /// <summary>
+        /// Whether the mass is due to shift. A negative deadline means "not armed yet", which
+        /// resolves as due, so a map that has never scheduled a shift takes one at its first
+        /// opportunity.
+        /// </summary>
+        public static bool ShouldShiftNow(int nextShiftTick, int now)
+        {
+            return nextShiftTick < 0 || now >= nextShiftTick;
+        }
+
+        /// <summary>
+        /// The deadline a map should carry after arriving over a RimWorld Together transfer.
+        /// Map components do not cross that transport, so the receiver builds the deadline from
+        /// its own clock: the sender's absolute tick is meaningless when the two peers run
+        /// different TicksGame on the same map. Without this the received copy is unarmed, reads
+        /// as due, and shifts on its first hash interval, walking straight away from the sender.
+        /// </summary>
+        public static int ShiftTickAfterTransfer(int now, int intervalTicks)
+        {
+            return now + (intervalTicks > 0 ? intervalTicks : 1);
+        }
+
         public static int TargetCount(int growableCellCount, float densityFraction)
         {
             if (growableCellCount <= 0 || densityFraction <= 0f) return 0;
