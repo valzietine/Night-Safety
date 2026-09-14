@@ -13,11 +13,11 @@ All notable changes are tracked here, newest first.
   warmth. Bleeding leaves white sap on the floor, blooming ripens into fruit on
   its own, and the inspect panel shows the state, the countdown, and what can be
   taken off it.
-- Stemroot is cut for wood or harvested with the plant cutting skill. Cutting
-  leaves the worker with the forest affliction and a stacking Unsettled memory,
-  worse for psychically sensitive people; harvesting costs less and leaves the
-  wall standing. Stemroot destroyed by anything other than a colonist doing the
-  work leaves no memory behind.
+- Stemroot is chopped for wood or harvested with the plant cutting skill.
+  Chopping leaves the worker with the forest affliction and a stacking
+  Unsettled memory, worse for psychically sensitive people; harvesting costs
+  less and leaves the wall standing. Stemroot destroyed by anything other than
+  a colonist doing the work leaves no memory behind.
 - Odd fruit and odd fungus, harvested from fruiting and flushing stemroot. Odd
   fruit counts as meat and vegetables at once and slows hunger for a while after
   eating. Bleeding stemroot gives chemfuel instead.
