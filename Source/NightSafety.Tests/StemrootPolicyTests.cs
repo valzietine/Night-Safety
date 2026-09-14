@@ -458,8 +458,8 @@ namespace NightSafety.Tests
         [Fact]
         public void ATransferredMapDoesNotShiftOnArrival()
         {
-            // The defect this guards: a received map left unarmed shifts on its very next hash
-            // interval and immediately walks away from the sender's copy.
+            // Left unset, a received map shifts on its very next check and walks straight
+            // away from the sender's copy. That is the bug this catches.
             const int now = 38001;
             int armed = StemrootPolicy.ShiftTickAfterTransfer(now, 2500);
             Assert.False(StemrootPolicy.ShouldShiftNow(armed, now));

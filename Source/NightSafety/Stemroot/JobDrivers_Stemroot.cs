@@ -8,7 +8,7 @@ namespace NightSafety.Stemroot
     /// <summary>
     /// The work loop for both stemroot orders. It is shaped like vanilla plant work rather than
     /// mining: progress accumulates at the pawn's plant work speed and the experience goes to
-    /// Plants, which is what the design doc asks for.
+    /// Plants, so a grower gets better at it and a miner does not.
     /// </summary>
     public abstract class JobDriver_StemrootWork : JobDriver
     {
